@@ -6,7 +6,7 @@ const Navbar = ({ session }) => {
   return (
     <div className={styles.container}>
       <div>
-        <p className={styles.title}>Adrenargy</p>
+        <p className={styles.title}>N Rich Finance</p>
       </div>
       {session?.user ? (
         <ul className={styles.navContent}>
