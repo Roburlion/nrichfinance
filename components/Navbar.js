@@ -3,12 +3,14 @@ import Image from "next/image";
 import styles from "../styles/Navbar.module.css";
 import { supabase } from "../utils/supabase";
 
+import navLogo from "../public/apple-touch-icon.png";
+
 const Navbar = ({ session }) => {
   return (
     <div className={styles.container}>
       <div>
         <Link href="/">
-          <Image src="/../public/apple-touch-icon.png" alt="logo" width={50} height={50} />
+          <Image src={navLogo} alt="logo" width={50} height={50} />
         </Link>
       </div>
       
