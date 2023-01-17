@@ -10,7 +10,7 @@ const Navbar = ({ session }) => {
     <div className={styles.container}>
       <div>
         <Link href="/">
-          <Image src={navLogo} alt="logo" width={50} height={50} />
+          <Image src={navLogo} alt="navLogo" width={50} height={50} />
         </Link>
       </div>
       
