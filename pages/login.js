@@ -45,7 +45,7 @@ const Login = () => {
             });
             if (error) alert(error.message);
             // push to home page
-            router.push("/");
+            router.push("/account");
           }}
           className={styles.button}
         >

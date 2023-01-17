@@ -33,7 +33,7 @@ const Create = () => {
       .single();
     alert("Workout created successfully");
     setWorkoutData(initialState);
-    router.push("/");
+    router.push("/account");
   };
 
   return (

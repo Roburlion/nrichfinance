@@ -21,6 +21,9 @@ const Navbar = ({ session }) => {
             session?.user ?
             (
               <ul className={styles.navContent}>
+                <Link href="/account">
+                  <li className={styles.name}>Account</li>
+                </Link>
                 <button
                   className={styles.buttons}
                   onClick={() => supabase.auth.signOut()}

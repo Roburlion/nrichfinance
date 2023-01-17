@@ -7,9 +7,16 @@ What do I want to do today?
 - focus on building
   - This will give me results that I can share with Chinmay and actually build this thing.
 
+## Work completed
+
+- Added logo and favicon
+- refactored Navbar.js
+- Added about page
+
 ## Next steps
 
-Push this up to github.
+- Separate Home and Account
+- If not logged in, Account should request the user login or sign up
 
 
 
@@ -32,6 +39,10 @@ Push this up to github.
 
 
 ## Getting Started
+
+Taken from the [Build a full stack nextjs supabase tutorial](https://blog.logrocket.com/build-full-stack-app-next-js-supabase/)
+
+
 
 First, run the development server:
 
