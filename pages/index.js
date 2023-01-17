@@ -50,6 +50,7 @@ export default function Home({ session }) {
       alert(error.message);
     }
   };
+
   return (
     <div className={styles.container}>
       <Head>
@@ -59,36 +60,40 @@ export default function Home({ session }) {
       </Head>
 
       <div className={styles.home}>
-        {!session?.user ? (
-          <div>
-            <p>
-              Welcome to N Rich Finance. Unlock the doors to a world of educational opportunities with an international student loan, sign up today and take the first step towards achieving your dreams.
-            </p>
-          </div>
-        ) : (
-          <div>
-            <p className={styles.workoutHeading}>
-              Hello <span className={styles.email}>{session.user.email}</span>,
-              Welcome to your dashboard
-            </p>
-            {data?.length === 0 ? (
-              <div className={styles.noWorkout}>
-                <p>You have no workouts yet</p>
-                <Link href="/create" legacyBehavior>
-                  <button className={styles.button}>
-                    {" "}
-                    Create a New Workout
-                  </button>
-                </Link>
-              </div>
-            ) : (
-              <div>
-                <p className={styles.workoutHeading}>Here are your workouts</p>
-                <WorkoutCard data={data} handleDelete={handleDelete} />
-              </div>
-            )}
-          </div>
-        )}
+        {
+          !session?.user ? 
+          (
+            <div>
+              <p>
+                Welcome to N Rich Finance. Unlock the doors to a world of educational opportunities with an international student loan, sign up today and take the first step towards achieving your dreams.
+              </p>
+            </div>
+          ) : 
+          (
+            <div>
+              <p className={styles.workoutHeading}>
+                Hello <span className={styles.email}>{session.user.email}</span>,
+                Welcome to your dashboard
+              </p>
+              {data?.length === 0 ? (
+                <div className={styles.noWorkout}>
+                  <p>You have no workouts yet</p>
+                  <Link href="/create" legacyBehavior>
+                    <button className={styles.button}>
+                      {" "}
+                      Create a New Workout
+                    </button>
+                  </Link>
+                </div>
+              ) : (
+                <div>
+                  <p className={styles.workoutHeading}>Here are your workouts</p>
+                  <WorkoutCard data={data} handleDelete={handleDelete} />
+                </div>
+              )}
+            </div>
+          )
+        }
       </div>
     </div>
   );

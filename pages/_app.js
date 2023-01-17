@@ -14,6 +14,7 @@ function MyApp({ Component, pageProps }) {
       setSession(session);
     });
   }, []);
+  
   return (
     <div>
       <Navbar session={session} />
