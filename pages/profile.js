@@ -2,25 +2,62 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import styles from "../styles/Home.module.css";
 import { supabase } from "../utils/supabase";
-import WorkoutCard from "../components/WorkoutCard";
-import ProfileCard from "../components/ProfileCard";
+
+let firstName = null;
+let lastName = null;
+let addressLine1 = null;
+let city = null;
+let state = null;
+let pinCode = null;
 
 export default function Profile({ session }) {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetchProfiles();
+    getLatestUserName();
+    getLatestUserAddress();
   }, []);
 
-  const fetchProfiles = async () => {
+  const getLatestUserName = async () => {
     const user = supabase.auth.user();
     try {
       setLoading(true);
       const { data, error } = await supabase
         .from("profiles")
         .select("*")
-        .eq("user_id", user?.id);
+        .eq("user_id", user?.id)
+        .order("inserted_at", { descending: true })
+        .limit(1);
+      
+      firstName = data[0].firstname;
+      lastName = data[0].lastname;
+
+      if (error) throw error;
+      setData(data);
+    } catch (error) {
+      alert(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+    
+
+  const getLatestUserAddress = async () => {
+    const user = supabase.auth.user();
+    try {
+      setLoading(true);
+      const { data, error } = await supabase
+        .from("addresses")
+        .select("*")
+        .eq("user_id", user?.id)
+        .order("inserted_at", { descending: true })
+        .limit(1);
+
+      addressLine1 = data[0].address_line_1;
+      city = data[0].city;
+      state = data[0].state;
+      pinCode = data[0].pin_code;
 
       if (error) throw error;
       setData(data);
@@ -32,7 +69,7 @@ export default function Profile({ session }) {
   };
 
   if (loading) {
-    return <div className={styles.loading}>Fetching Profiles...</div>;
+    return <div className={styles.loading}>Fetching Profile...</div>;
   }
 
   const handleDelete = async (id) => {
@@ -63,27 +100,27 @@ export default function Profile({ session }) {
           ) : 
           (
             <div>
-              <p className={styles.workoutHeading}>
-                Hello <span className={styles.email}>{session.user.email}</span>,
-                Welcome to your profile
-              </p>
-              <br/>
-              <Link href="/create">
-                <button className={styles.button}>
-                  {" "}
-                  Create a New Profile
-                </button>
-              </Link>
-              {data?.length === 0 ? (
-                <div className={styles.noWorkout}>
-                  <p>You have no profiles yet</p>
-                </div>
-              ) : (
-                <div>
-                  <p className={styles.workoutHeading}>Here are your profiles</p>
-                  <ProfileCard data={data} handleDelete={handleDelete} />
-                </div>
-              )}
+              {
+                data?.length === 0 ? 
+                (
+                  <div className={styles.noWorkout}>
+                    <p>Please update your name</p>
+                  </div>
+                ) : 
+                (
+                  <div>
+                    <h1>Profile</h1>
+                    <p>
+                      First name: {firstName}<br/>
+                      Last name: {lastName}<br/>
+                      Address line 1: {addressLine1}<br/>
+                      City: {city}<br/>
+                      State: {state}<br/>
+                      Pin code: {pinCode}<br/>
+                    </p>
+                  </div>
+                )
+              }
             </div>
           )
         }

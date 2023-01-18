@@ -1,5 +1,15 @@
 Lsn6i2QXcWurK3z3
 
+
+
+Street: H3 Laxminagar
+
+City: Nagpur
+
+State: Maharashtra 
+
+Pin code: 440022
+
 # Goals
 
 What do I want to do today?
