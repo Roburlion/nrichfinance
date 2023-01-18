@@ -23,8 +23,11 @@ const Navbar = ({ session }) => {
             session?.user ?
             (
               <ul className={styles.navContent}>
-                <Link href="/account">
-                  <li className={styles.name}>Account</li>
+                <Link href="/workouts">
+                  <li className={styles.name}>Workouts</li>
+                </Link>
+                <Link href="/profile">
+                  <li className={styles.name}>Profile</li>
                 </Link>
                 <button
                   className={styles.buttons}
@@ -32,13 +35,6 @@ const Navbar = ({ session }) => {
                 >
                   Logout
                 </button>
-                <Link href="/create">
-                  <button
-                    className={styles.buttons}
-                  >
-                    Create New Workout
-                  </button>
-                </Link>
               </ul>
             ) :
             (

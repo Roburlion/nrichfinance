@@ -1,3 +1,5 @@
+Lsn6i2QXcWurK3z3
+
 # Goals
 
 What do I want to do today?
@@ -12,11 +14,18 @@ What do I want to do today?
 - Added logo and favicon
 - refactored Navbar.js
 - Added about page
+- Separate Home and Account
+- If not logged in, Account should request the user login or sign up
 
 ## Next steps
 
-- Separate Home and Account
-- If not logged in, Account should request the user login or sign up
+Now, I want to start changing the backend on this thing.  I need to take a look at how they use the form to write stuff the db.
+
+> Do I want to create a new table or change the one I’ve got?
+>
+> - If I change the one I’ve got I could mess things up.
+> - If I create a new one it will take me longer
+> - Let me just take a look at what I’ve got and see how it works…
 
 
 
