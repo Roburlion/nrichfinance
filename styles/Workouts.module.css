@@ -51,9 +51,11 @@
 }
 
 .container {
-  color: black;
-  padding: 50px;
+  color: #d8d8d8;
   height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .home {
@@ -72,4 +74,32 @@
   cursor: pointer;
   transition: all 0.3s ease-in-out;
   margin-top: 1.5rem;
+}
+
+.workoutHeading {
+  text-align: center;
+  margin-top: 1rem;
+}
+
+.email {
+  color: #f35815;
+}
+
+.noWorkout {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.loading {
+  color: #f35815;
+  margin-top: 1rem;
+}
+
+.loading {
+  text-align: center;
+  color: #d8d8d8;
+  height: 100vh;
 }
