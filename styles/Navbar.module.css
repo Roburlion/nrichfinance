@@ -18,6 +18,7 @@
 .navContent {
   display: flex;
   align-items: center;
+  gap: 1.5rem;
 }
 
 .title {
@@ -31,7 +32,6 @@
 }
 
 .name {
-  margin-right: 2rem;
   color: #f35815;
   cursor: pointer;
 }
