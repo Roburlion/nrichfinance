@@ -27,9 +27,9 @@ export default function Profile({ session }) {
         .from("profiles")
         .select("*")
         .eq("user_id", user?.id)
-        .order("inserted_at", { descending: true })
+        .order("inserted_at", { ascending: false })
         .limit(1);
-      
+        
       firstName = data[0].firstname;
       lastName = data[0].lastname;
 
