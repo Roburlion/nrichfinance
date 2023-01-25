@@ -1,0 +1,8 @@
+.cardBanner {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    height: min-content;
+    background-color: white;
+}

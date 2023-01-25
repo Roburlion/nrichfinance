@@ -1,9 +1,9 @@
 import Link from "next/link";
 import Image from "next/image";
-import styles from "../styles/Navbar.module.css";
-import { supabase } from "../utils/supabase";
+import styles from "./Navbar.module.css";
+import { supabase } from "../../utils/supabase";
 
-import navLogo from "../public/apple-touch-icon.png";
+import navLogo from "../../public/apple-touch-icon.png";
 
 const Navbar = ({ session }) => {
   return (

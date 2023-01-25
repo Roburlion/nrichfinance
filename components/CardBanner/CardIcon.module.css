@@ -1,0 +1,8 @@
+.cardIcon {
+    /*background-image: url('./empowerment.png');*/
+    background-size: 150px;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 150px;
+    width: 150px;
+}

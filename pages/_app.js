@@ -1,7 +1,7 @@
 import Head from "next/head";
 import { useState, useEffect } from "react";
-import Footer from "../components/Footer";
-import Navbar from "../components/Navbar";
+import Footer from "../components/Footer/Footer";
+import Navbar from "../components/Navbar/Navbar";
 import "../styles/globals.css";
 import { supabase } from "../utils/supabase";
 
