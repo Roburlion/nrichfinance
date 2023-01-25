@@ -2,6 +2,8 @@ import Link from "next/link";
 import Image from "next/image";
 import styles from "./Navbar.module.css";
 import { supabase } from "../../utils/supabase";
+import ScrollY from '../ScrollY/App'
+import FadeIn from '../FadeIn/App'
 
 import navLogo from "../../public/apple-touch-icon.png";
 
@@ -9,16 +11,16 @@ const Navbar = ({ session }) => {
   return (
     <div className={styles.container}>
       <div>
-        <Link href="/">
-          <Image src={navLogo} alt="navLogo" width={50} height={50} />
-        </Link>
+        <FadeIn />
       </div>
       
       <div>
         <ul className={styles.navContent}>
-          <Link href="/about">
-            <li className={styles.name}>About</li>
-          </Link>
+          <li className={styles.name}>
+            <Link href="/about">
+              About
+            </Link>
+          </li>
           {
             session?.user ?
             (
