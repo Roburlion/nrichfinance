@@ -4,8 +4,27 @@ import { useEffect, useState } from "react";
 import styles from "../styles/Home.module.css";
 import HeroBanner from '../components/HeroBanner/HeroBanner';
 import BrandBanner from '../components/BrandBanner/BrandBanner';
+import CardBanner from '../components/CardBanner/CardBanner';
+import UniSupport from '../components/UniSupport/App'
 
 export default function Home({ session }) {
+  const cards = [
+    { 
+      url: require('../components/CardBanner/rocket.svg').default.src,
+      title: 'Accessibility',
+      text: 'Fast. Simple. Easy.',
+    },
+    {
+      url: require('../components/CardBanner/types.svg').default.src,
+      title: 'Secured & Unsecured loans',
+      text: '',
+    },
+    {
+      url: require('../components/CardBanner/bank.svg').default.src,
+      title: 'Rates starting at 7.95%',
+      text: '',
+    },
+  ]
   return (
     <>
       <BrandBanner />
@@ -14,6 +33,8 @@ export default function Home({ session }) {
         title='Welcome to NRich&nbsp;Finance'
         text='Unlock the doors to a world of educational opportunities with an international student loan, sign up today and take the first step towards achieving your dreams'
       />
+      <CardBanner cards={cards} />
+      <UniSupport />
     </>    
   );
 }
