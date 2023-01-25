@@ -23,9 +23,6 @@ const Navbar = ({ session }) => {
             session?.user ?
             (
               <ul className={styles.navContent}>
-                <Link href="/workouts">
-                  <li className={styles.name}>Workouts</li>
-                </Link>
                 <Link href="/profile">
                   <li className={styles.name}>Profile</li>
                 </Link>
