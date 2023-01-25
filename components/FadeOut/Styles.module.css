@@ -1,0 +1,27 @@
+/* Hello.module.css */
+.hello {
+  opacity: 0;
+  transition: opacity .25s ease-in-out, transform .25s ease-in-out;
+  transform: translateY(-25px);
+}
+
+.fadeIn {
+  opacity: 1;
+  transform: translateY(0px);
+}
+
+.headingWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100px;
+}
+
+.headingWrapper h1 {
+  font-size: 3rem;
+  font-weight: bolder;
+  color: white;
+}
+/*
+transform: translateX(0);
+*/

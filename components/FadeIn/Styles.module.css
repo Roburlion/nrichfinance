@@ -1,0 +1,14 @@
+/* Hello.module.css */
+.hello {
+  opacity: 0;
+  transition: opacity .25s ease-in-out, transform .25s ease-in-out;
+  transform: translateY(25px);
+}
+
+.fadeIn {
+  opacity: 1;
+  transform: translateY(0px);
+}
+/*
+transform: translateX(0);
+*/

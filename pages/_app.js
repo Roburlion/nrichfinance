@@ -15,6 +15,8 @@ function MyApp({ Component, pageProps }) {
     });
   }, []);
   
+  console.log('PAGE PROPS\n', session)
+
   return (
     <div>
       <Head>

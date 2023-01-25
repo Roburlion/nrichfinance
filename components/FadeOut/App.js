@@ -5,7 +5,18 @@ import Image from 'next/image';
 import styles from './Styles.module.css';
 import navLogo from '../../public/apple-touch-icon.png';
 
-function Hello() {
+import { useRouter } from 'next/router'
+
+export default function App(props) {
+  const routes = {
+    '/': 'Welcome',
+    '/about': 'About',
+    '/contact': 'Contact',
+    '/profile': 'Profile',
+  }
+
+  const pageTitle = routes[useRouter().pathname]
+
   const [scrollY, setScrollY] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
 
@@ -19,7 +30,7 @@ function Hello() {
   }, []);
 
   useEffect(() => {
-    if (scrollY > 150) {
+    if (scrollY < 150) {
       setIsVisible(true);
     } else {
       setIsVisible(false);
@@ -28,11 +39,9 @@ function Hello() {
 
   return (
     <div className={`${styles.hello} ${isVisible ? styles.fadeIn : ''}`}>
-        <Link href="/">
-          <Image src={navLogo} alt="navLogo" width={100} height={100} />
-        </Link>
+      <div className={styles.headingWrapper}>
+        <h1>{pageTitle}</h1>
+      </div>
     </div>
   );
 }
-
-export default Hello;

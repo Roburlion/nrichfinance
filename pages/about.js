@@ -1,4 +1,5 @@
 import styles from "../styles/About.module.css";
+import BrandBanner from '../components/BrandBanner/BrandBanner';
 import HeroBanner from '../components/HeroBanner/HeroBanner'
 import CardBanner from '../components/CardBanner/CardBanner';
 
@@ -33,6 +34,7 @@ export default function About({ session }) {
   
   return (
     <>
+      <BrandBanner />
       <HeroBanner
         image={require('../components/HeroBanner/dallas_sunset_1920.jpg').default.src}
         title='NRich&nbsp;Finance'

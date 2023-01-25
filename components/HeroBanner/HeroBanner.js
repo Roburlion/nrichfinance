@@ -24,7 +24,6 @@ import Link from "next/link";
 import styles from "./HeroBanner.module.css";
 
 export default function App(props) {
-  console.log('props check\n', props.image);
   return (
     <div className={styles.heroImage} style={{ backgroundImage: `url(${props.image})` }} >
       <div className={styles.heroMask}>

@@ -26,6 +26,14 @@
   font-weight: 500;
 }
 
+.fadeWrapper {
+  display: grid;
+}
+
+.fadeItem {
+  grid-area: 1 / 1;
+}
+
 .logo {
   width: 100px;
   height: 100px;
