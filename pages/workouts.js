@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import styles from "../styles/Workouts.module.css";
-import navStyles from "../styles/Navbar.module.css";
+import navStyles from "../components/Navbar/Navbar.module.css";
 import { supabase } from "../utils/supabase";
 import WorkoutCard from "../components/WorkoutCard";
 

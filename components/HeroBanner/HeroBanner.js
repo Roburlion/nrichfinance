@@ -19,11 +19,12 @@
       <Link href="/signup">SIGN UP NOW!</Link>
 */
 
-/*import Link from "next/link";*/
+import Link from "next/link";
 
 import styles from "./HeroBanner.module.css";
 
 export default function App(props) {
+  console.log('props check\n', props.image);
   return (
     <div className={styles.heroImage} style={{ backgroundImage: `url(${props.image})` }} >
       <div className={styles.heroMask}>
@@ -35,7 +36,7 @@ export default function App(props) {
             {props.text}
           </div>
           <div className={styles.heroButton}>
-            {/*<Link href="/signup">SIGN UP NOW!</Link>*/}
+            <Link href="/signup">SIGN UP NOW!</Link>
           </div>
         </div>
       </div>
