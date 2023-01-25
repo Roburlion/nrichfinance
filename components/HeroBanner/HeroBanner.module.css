@@ -15,8 +15,8 @@
 }
 
 .heroContent {
-  padding-left: 50px;
-  padding-top: 50px;
+  padding-left: 150px;
+  padding-top: 100px;
   padding-right: 25%;
   display: flex;
   flex-direction: column;
@@ -37,9 +37,8 @@
 }
 
 .heroButton {
-  border: 3px solid #f35815;
-  background-color: white;
-  color: #d8d8d8;
+  border: 3px solid #eaa159;
+  background-color: #07305d;
   margin-top: 1rem;
   padding: 0.5rem 2rem;
   border-radius: 2rem;
@@ -47,6 +46,6 @@
   transition: all 0.3s ease-in-out;
   width: fit-content;
   font-weight: bold;
-  color: #f35815;
+  color: #eaa159;
   font-size: 2rem;
 }
