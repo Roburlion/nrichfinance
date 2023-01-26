@@ -11,8 +11,8 @@ export default function Home({ session }) {
   const cards = [
     { 
       url: require('../components/CardBanner/rocket.svg').default.src,
-      title: 'Accessibility',
-      text: 'Fast. Simple. Easy.',
+      title: 'Fast. Simple. Easy.',
+      text: '',
     },
     {
       url: require('../components/CardBanner/types.svg').default.src,

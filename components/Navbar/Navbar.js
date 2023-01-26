@@ -22,6 +22,11 @@ const Navbar = ({ session }) => {
       <div>
         <ul className={styles.navContent}>
           <li className={styles.name}>
+            <Link href="/">
+              Home
+            </Link>
+          </li>
+          <li className={styles.name}>
             <Link href="/about">
               About
             </Link>
