@@ -88,42 +88,12 @@ export default function Profile({ session }) {
   };
 
   return (
-    <div className={styles.container}>
-      <div className={styles.home}>
-        {
-          !session?.user ? 
-          (
-            <div>
-              <p>To view your profile, please login or sign up.</p>
-            </div>
-          ) : 
-          (
-            <div>
-              {
-                data?.length === 0 ? 
-                (
-                  <div className={styles.noWorkout}>
-                    <p>Please update your name</p>
-                  </div>
-                ) : 
-                (
-                  <div>
-                    <h1>Profile</h1>
-                    <p>
-                      First name: {firstName}<br/>
-                      Last name: {lastName}<br/>
-                      Address: {address}<br/>
-                      City: {city}<br/>
-                      State: {state}<br/>
-                      Pin code: {pinCode}<br/>
-                    </p>
-                  </div>
-                )
-              }
-            </div>
-          )
-        }
-      </div>
+    <div style={{
+      width: '100%',
+      height: '100vh',
+      padding: '1rem 10%',
+    }}>
+        <h1>hello world</h1>
     </div>
   );
 }
