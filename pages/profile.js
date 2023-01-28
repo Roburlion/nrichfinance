@@ -36,7 +36,6 @@ export default function Profile({ session }) {
     },
   });
 
-
   useEffect(() => {
     getLatestUserName();
     getLatestUserAddress();
@@ -103,7 +102,6 @@ export default function Profile({ session }) {
       height: '100vh',
       padding: '1rem 10%',
     }}>
-      <h1>hello world</h1>
         <Box
           component="form"
           sx={{
