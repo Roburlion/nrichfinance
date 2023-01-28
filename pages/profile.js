@@ -1,18 +1,41 @@
-import Link from "next/link";
-import { useEffect, useState } from "react";
-import styles from "../styles/Home.module.css";
-import { supabase } from "../utils/supabase";
+import React from 'react';
+import { useFormik } from 'formik';
+import * as yup from 'yup';
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
+import Box from '@mui/material/Box';
+import Stack from '@mui/material/Stack';
+import { useEffect, useState } from 'react';
+import { supabase } from '../utils/supabase';
 
-let firstName = null;
-let lastName = null;
-let addressLine1 = null;
-let city = null;
-let state = null;
-let pinCode = null;
+const validationSchema = yup.object({
+  email: yup
+    .string('Enter your email')
+    .email('Enter a valid email')
+    .required('Email is required'),
+  password: yup
+    .string('Enter your password')
+    .min(8, 'Password should be of minimum 8 characters length')
+    .required('Password is required'),
+});
 
 export default function Profile({ session }) {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+
+  const formik = useFormik({
+    initialValues: {
+      email: 'foobar@example.com',
+      password: 'foobar',
+    },
+    validationSchema: validationSchema,
+    onSubmit: (values) => {
+      alert(JSON.stringify(values, null, 2));
+    },
+  });
+
 
   useEffect(() => {
     getLatestUserName();
@@ -24,14 +47,14 @@ export default function Profile({ session }) {
     try {
       setLoading(true);
       const { data, error } = await supabase
-        .from("profiles")
-        .select("*")
-        .eq("user_id", user?.id)
-        .order("inserted_at", { ascending: false })
+        .from('profiles')
+        .select('*')
+        .eq('user_id', user?.id)
+        .order('inserted_at', { ascending: false })
         .limit(1);
         
-      firstName = data[0].firstname;
-      lastName = data[0].lastname;
+      setFirstName(data[0].firstname);
+      setLastName(data[0].lastname);
 
       if (error) throw error;
       setData(data);
@@ -41,16 +64,15 @@ export default function Profile({ session }) {
       setLoading(false);
     }
   };
-    
-
+  
   const getLatestUserAddress = async () => {
     const user = supabase.auth.user();
     try {
       setLoading(true);
       const { data, error } = await supabase
-        .from("addresses")
-        .select("*")
-        .eq("user_id", user?.id)
+        .from('addresses')
+        .select('*')
+        .eq('user_id', user?.id)
         .order('id', { descending: true });
 
       address = data[0].address;
@@ -68,24 +90,12 @@ export default function Profile({ session }) {
   };
 
   if (loading) {
-    return <div className={styles.loading}>Fetching Profile...</div>;
+    return <div style={{
+      textAlign: 'center',
+    }}>
+      <h1>Fetching Profile...</h1>
+    </div>;
   }
-
-  const handleDelete = async (id) => {
-    try {
-      const user = supabase.auth.user();
-      const { data, error } = await supabase
-        .from("profiles")
-        .delete()
-        .eq("id", id)
-        .eq("user_id", user?.id);
-      fetchProfiles();
-      if (error) throw error;
-      alert("Profile deleted successfully");
-    } catch (error) {
-      console.log('handleDelete()\n' + error.message);
-    }
-  };
 
   return (
     <div style={{
@@ -93,7 +103,39 @@ export default function Profile({ session }) {
       height: '100vh',
       padding: '1rem 10%',
     }}>
-        <h1>hello world</h1>
+      <h1>hello world</h1>
+        <Box
+          component="form"
+          sx={{
+            '& > :not(style)': { m: 1, width: '25ch' },
+          }}
+          noValidate
+          autoComplete="off"
+          onSubmit={formik.handleSubmit}
+        ><Stack spacing={2} >
+          <TextField
+            id="email"
+            name="email"
+            label="Email"
+            value={formik.values.email}
+            onChange={formik.handleChange}
+            error={formik.touched.email && Boolean(formik.errors.email)}
+            helperText={formik.touched.email && formik.errors.email}
+          />
+          <TextField
+            id="password"
+            name="password"
+            label="Password"
+            type="password"
+            value={formik.values.password}
+            onChange={formik.handleChange}
+            error={formik.touched.password && Boolean(formik.errors.password)}
+            helperText={formik.touched.password && formik.errors.password}
+          />
+          <Button color="primary" variant="contained" type="submit">
+            Submit
+          </Button>
+          </Stack></Box>
     </div>
   );
 }
