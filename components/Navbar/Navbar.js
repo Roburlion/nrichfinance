@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import Link from "next/link";
 import Image from "next/image";
 import styles from "./Navbar.module.css";
@@ -6,6 +7,7 @@ import FadeIn from '../FadeIn/App'
 import FadeOut from '../FadeOut/App'
 
 const Navbar = ({ session }) => {
+  const router = useRouter();
   return (
     <div className={styles.container}>
       <div>
@@ -40,7 +42,10 @@ const Navbar = ({ session }) => {
                 </Link>
                 <button
                   className={styles.buttons}
-                  onClick={() => supabase.auth.signOut()}
+                  onClick={() => {
+                    supabase.auth.signOut();
+                    router.push("/");
+                  }}
                 >
                   Logout
                 </button>
