@@ -36,7 +36,7 @@ export default function Profile({ session }) {
       if (error) throw error;
       setData(data);
     } catch (error) {
-      alert(error.message);
+      console.log('getLatestUserName()\n' + error.message);
     } finally {
       setLoading(false);
     }
@@ -51,10 +51,9 @@ export default function Profile({ session }) {
         .from("addresses")
         .select("*")
         .eq("user_id", user?.id)
-        .order("inserted_at", { descending: true })
-        .limit(1);
+        .order('id', { descending: true });
 
-      addressLine1 = data[0].address_line_1;
+      address = data[0].address;
       city = data[0].city;
       state = data[0].state;
       pinCode = data[0].pin_code;
@@ -62,7 +61,7 @@ export default function Profile({ session }) {
       if (error) throw error;
       setData(data);
     } catch (error) {
-      alert(error.message);
+      console.log('getLatestUserAddress()\n' + error.message);
     } finally {
       setLoading(false);
     }
@@ -84,7 +83,7 @@ export default function Profile({ session }) {
       if (error) throw error;
       alert("Profile deleted successfully");
     } catch (error) {
-      alert(error.message);
+      console.log('handleDelete()\n' + error.message);
     }
   };
 
@@ -113,7 +112,7 @@ export default function Profile({ session }) {
                     <p>
                       First name: {firstName}<br/>
                       Last name: {lastName}<br/>
-                      Address line 1: {addressLine1}<br/>
+                      Address: {address}<br/>
                       City: {city}<br/>
                       State: {state}<br/>
                       Pin code: {pinCode}<br/>

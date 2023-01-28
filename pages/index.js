@@ -8,6 +8,7 @@ import CardBanner from '../components/CardBanner/CardBanner';
 import UniSupport from '../components/UniSupport/App'
 
 export default function Home({ session }) {
+
   const cards = [
     { 
       url: require('../components/CardBanner/rocket.svg').default.src,
