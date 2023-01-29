@@ -14,6 +14,7 @@ export default function App(props) {
     '/contact': 'Contact',
     '/profile': 'Profile',
     '/signup': 'Sign up',
+    '/login': 'Login',
   }
 
   const pageTitle = routes[useRouter().pathname]

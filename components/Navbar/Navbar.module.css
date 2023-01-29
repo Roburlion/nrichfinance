@@ -1,17 +1,23 @@
+.global, .global > * {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
 .container {
   background-color: #07305d;
+
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 100px;
+  
+  /* height: min-content; */
+  width: 100%;
   padding: 0 10%;
-  /*border-bottom: #eaa159 1px solid;*/
-  box-shadow: 0px -5px 5px 0px rgba(0,0,0,0.75);
-
+  
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
   z-index: 1;
 }
 
@@ -19,6 +25,7 @@
   display: flex;
   align-items: center;
   gap: 1.5rem;
+  list-style: none;
 }
 
 .title {

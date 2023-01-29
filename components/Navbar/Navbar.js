@@ -9,60 +9,62 @@ import FadeOut from '../FadeOut/App'
 const Navbar = ({ session }) => {
   const router = useRouter();
   return (
-    <div className={styles.container}>
-      <div>
-        <div className={styles.fadeWrapper}>
-          <div className={styles.fadeItem}>
-            <FadeOut />
-          </div>
-          <div className={styles.fadeItem}>
-            <FadeIn />
+    <div className={styles.global}>
+      <div className={styles.container}>
+        <div>
+          <div className={styles.fadeWrapper}>
+            <div className={styles.fadeItem}>
+              <FadeOut />
+            </div>
+            <div className={styles.fadeItem}>
+              <FadeIn />
+            </div>
           </div>
         </div>
-      </div>
       
-      <div>
-        <ul className={styles.navContent}>
-          <li className={styles.name}>
-            <Link href="/">
-              Home
-            </Link>
-          </li>
-          <li className={styles.name}>
-            <Link href="/about">
-              About
-            </Link>
-          </li>
-          {
-            session?.user ?
-            (
-              <ul className={styles.navContent}>
-                <Link href="/profile">
-                  <li className={styles.name}>Profile</li>
-                </Link>
-                <button
-                  className={styles.buttons}
-                  onClick={() => {
-                    supabase.auth.signOut();
-                    router.push("/");
-                  }}
-                >
-                  Logout
-                </button>
-              </ul>
-            ) :
-            (
-              <ul className={styles.navContent}>
-                <Link href="/login">
-                  <li className={styles.buttons}>Login</li>
-                </Link>
-                <Link href="/signup">
-                  <li className={styles.buttons}>Signup</li>
-                </Link>
-              </ul>
-            )
-          }
-        </ul>
+        <div>
+          <ul className={styles.navContent}>
+            <li className={styles.name}>
+              <Link href="/">
+                Home
+              </Link>
+            </li>
+            <li className={styles.name}>
+              <Link href="/about">
+                About
+              </Link>
+            </li>
+            {
+              session?.user ?
+              (
+                <ul className={styles.navContent}>
+                  <Link href="/profile">
+                    <li className={styles.name}>Profile</li>
+                  </Link>
+                  <button
+                    className={styles.buttons}
+                    onClick={() => {
+                      supabase.auth.signOut();
+                      router.push("/");
+                    }}
+                  >
+                    Logout
+                  </button>
+                </ul>
+              ) :
+              (
+                <ul className={styles.navContent}>
+                  <Link href="/login">
+                    <li className={styles.buttons}>Login</li>
+                  </Link>
+                  <Link href="/signup">
+                    <li className={styles.buttons}>Signup</li>
+                  </Link>
+                </ul>
+              )
+            }
+          </ul>
+        </div>
       </div>
     </div>
   );

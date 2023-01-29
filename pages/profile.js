@@ -9,36 +9,35 @@ import { useEffect, useState } from 'react';
 import { supabase } from '../utils/supabase';
 
 const validationSchema = yup.object({
-  email: yup
-    .string('Enter your email')
-    .email('Enter a valid email')
-    .required('Email is required'),
-  password: yup
-    .string('Enter your password')
-    .min(8, 'Password should be of minimum 8 characters length')
-    .required('Password is required'),
+  firstName: yup
+    .string('Enter your first name')
+    .required('First Name is required'),
+  lastName: yup
+    .string('Enter your last name')
+    .required('Last Name is required'),
 });
 
 export default function Profile({ session }) {
-  const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [data, setData] = useState([]);
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
 
   const formik = useFormik({
     initialValues: {
-      email: 'foobar@example.com',
-      password: 'foobar',
+      firstName: '',
+      lastName: '',
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
       alert(JSON.stringify(values, null, 2));
     },
   });
-
-  useEffect(() => {
-    getLatestUserName();
-    getLatestUserAddress();
+    
+    useEffect(() => {
+      getLatestUserName();
+      getLatestUserAddress();
+      console.log('useFormik')
   }, []);
 
   const getLatestUserName = async () => {
@@ -50,7 +49,6 @@ export default function Profile({ session }) {
         .select('*')
         .eq('user_id', user?.id)
         .order('inserted_at', { ascending: false })
-        .limit(1);
         
       setFirstName(data[0].firstname);
       setLastName(data[0].lastname);
@@ -112,23 +110,22 @@ export default function Profile({ session }) {
           onSubmit={formik.handleSubmit}
         ><Stack spacing={2} >
           <TextField
-            id="email"
-            name="email"
-            label="Email"
-            value={formik.values.email}
+            id="firstName"
+            name="firstName"
+            label="First Name"
+            value={formik?.values?.firstName}
             onChange={formik.handleChange}
-            error={formik.touched.email && Boolean(formik.errors.email)}
-            helperText={formik.touched.email && formik.errors.email}
+            error={formik.touched.firstName && Boolean(formik.errors.firstName)}
+            helperText={formik.touched.firstName && formik.errors.firstName}
           />
           <TextField
-            id="password"
-            name="password"
-            label="Password"
-            type="password"
-            value={formik.values.password}
+            id="lastName"
+            name="lastName"
+            label="Last Name"
+            value={formik?.values?.lastName}
             onChange={formik.handleChange}
-            error={formik.touched.password && Boolean(formik.errors.password)}
-            helperText={formik.touched.password && formik.errors.password}
+            error={formik.touched.lastName && Boolean(formik.errors.lastName)}
+            helperText={formik.touched.lastName && formik.errors.lastName}
           />
           <Button color="primary" variant="contained" type="submit">
             Submit

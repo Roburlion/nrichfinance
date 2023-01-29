@@ -1,4 +1,21 @@
+
 .container {
+  width: 100%;
+  height: min-content;
+  padding: 2.5rem;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+}
+
+.authWrapper {
+  width: 250px;
+  height: min-content;
+  padding: 1rem;
+  background-color: darkslategray;
+}
+
+/* .container {
   width: 100%;
   height: 100vh;
   display: flex;
@@ -42,4 +59,4 @@
 
 .button:hover {
   transform: scale(1.1);
-}
+} */

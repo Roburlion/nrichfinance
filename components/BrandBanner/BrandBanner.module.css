@@ -3,6 +3,9 @@
   height: 500px;
   padding: 0 10%;
   background-color: #07305d;
+  box-sizing: border-box;
+  /* margin: 0; */
+
 }
 .imageWrapper {
   position: relative;
