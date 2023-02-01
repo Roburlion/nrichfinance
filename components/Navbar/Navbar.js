@@ -1,13 +1,15 @@
+import { useUser, useSupabaseClient } from '@supabase/auth-helpers-react'
 import { useRouter } from "next/router";
 import Link from "next/link";
-import Image from "next/image";
 import styles from "./Navbar.module.css";
-import { supabase } from "../../utils/supabase";
 import FadeIn from '../FadeIn/App'
 import FadeOut from '../FadeOut/App'
 
 const Navbar = ({ session }) => {
+  const supabaseClient = useSupabaseClient()
+  const user = useUser()
   const router = useRouter();
+
   return (
     <div className={styles.global}>
       <div className={styles.container}>
@@ -21,7 +23,7 @@ const Navbar = ({ session }) => {
             </div>
           </div>
         </div>
-      
+
         <div>
           <ul className={styles.navContent}>
             <li className={styles.name}>
@@ -29,13 +31,14 @@ const Navbar = ({ session }) => {
                 Home
               </Link>
             </li>
+
             <li className={styles.name}>
               <Link href="/about">
                 About
               </Link>
             </li>
             {
-              session?.user ?
+              user ?
               (
                 <ul className={styles.navContent}>
                   <Link href="/profile">
@@ -44,21 +47,21 @@ const Navbar = ({ session }) => {
                   <button
                     className={styles.buttons}
                     onClick={() => {
-                      supabase.auth.signOut();
+                      supabaseClient.auth.signOut();
                       router.push("/");
                     }}
                   >
-                    Logout
+                    Sign out
                   </button>
                 </ul>
               ) :
               (
                 <ul className={styles.navContent}>
                   <Link href="/login">
-                    <li className={styles.buttons}>Login</li>
+                    <li className={styles.buttons}>Sign in</li>
                   </Link>
-                  <Link href="/signup">
-                    <li className={styles.buttons}>Signup</li>
+                  <Link href="/login">
+                    <li className={styles.buttons}>Sign up</li>
                   </Link>
                 </ul>
               )

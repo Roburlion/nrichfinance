@@ -1,17 +1,21 @@
 import Head from "next/head";
-// import { useState, useEffect } from "react";
 import Footer from "../components/Footer/Footer";
 import Navbar from "../components/Navbar/Navbar";
-// import { supabase } from "../utils/supabase";
 import "../styles/globals.css";
 
 import { createBrowserSupabaseClient } from '@supabase/auth-helpers-nextjs'
 import { SessionContextProvider } from '@supabase/auth-helpers-react'
 import { useState } from 'react'
 
-function MyApp({ Component, pageProps }) {
+export default function MyApp({ Component, pageProps }) {
   // Create a new supabase browser client on every first render.
   const [supabaseClient] = useState(() => createBrowserSupabaseClient())
+
+  console.log(
+    'MyApp() supabaseClient\n', supabaseClient,
+    '\nMyApp() pageProps\n', pageProps,
+    '\nMyApp() Component\n', Component,
+  )
 
   return (
     <SessionContextProvider
@@ -37,7 +41,7 @@ function MyApp({ Component, pageProps }) {
   )
 }
 
-// function MyApp({ Component, pageProps }) {
+// export default function MyApp({ Component, pageProps }) {
   // const [session, setSession] = useState(null);
 
   // useEffect(() => {
@@ -67,5 +71,3 @@ function MyApp({ Component, pageProps }) {
   //   </div>
   // );
 // }
-
-export default MyApp;

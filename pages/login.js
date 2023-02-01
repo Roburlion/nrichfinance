@@ -1,36 +1,38 @@
-// import { createClient } from '@supabase/supabase-js'
-// import { Auth } from '@supabase/auth-ui-react'
+import { useRouter } from "next/router";
+// import { useEffect, useState } from 'react'
 import { Auth, ThemeSupa } from '@supabase/auth-ui-react'
 import { useUser, useSupabaseClient } from '@supabase/auth-helpers-react'
-// import { supabase } from "../utils/supabase";
 import styles from '../styles/Login.module.css'
 
 export default function Login () {
   const supabaseClient = useSupabaseClient()
   const user = useUser()
+  const router = useRouter();
 
-  console.log(
-    // 'supabase\n', supabase,
-    '\nsupabaseClient\n', supabaseClient,
-    '\nuser\n', user,
-  )
-  
-  return (
-    // <Auth supabaseClient={supabase} />
-    <div className={ styles.container }>
-      <div className={ styles.authWrapper }>
-          <Auth
-            redirectTo="http://localhost:3000/"
-            appearance={{ theme: ThemeSupa }}
-            theme='dark'
-            supabaseClient={supabaseClient}
-            providers={['google', 'github']}
-            socialLayout="vertical"
-          />
-          <button onClick={() => supabaseClient.auth.signOut()}>Sign out</button>
+  // console.log(
+  //   'supabaseClient\n', supabaseClient,
+  //   '\nuser\n', user,
+  // )
+
+  if (!user) {
+    return (
+      // <Auth supabaseClient={supabase} />
+      <div className={ styles.container }>
+        <div className={ styles.authWrapper }>
+            <Auth
+              redirectTo="http://localhost:3000/"
+              appearance={{ theme: ThemeSupa }}
+              theme='dark'
+              supabaseClient={supabaseClient}
+              providers={['google', 'github']}
+              socialLayout="vertical"
+            />
+        </div>
       </div>
-    </div>
-  )
+    )
+  }
+  // return <button onClick={() => supabaseClient.auth.signOut()}>Sign out</button>
+  router.push("/profile");
 }
 
 /****************************************************************************** */
