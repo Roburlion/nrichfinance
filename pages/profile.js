@@ -1,39 +1,36 @@
-import { Auth, ThemeSupa } from '@supabase/auth-ui-react'
 import { useUser, useSupabaseClient } from '@supabase/auth-helpers-react'
 import { useEffect, useState } from 'react'
 
 export default function Profile() {
   const supabaseClient = useSupabaseClient()
   const user = useUser()
-  const [data, setData] = useState()
+  const [nameData, setNameData] = useState()
 
   useEffect(() => {
-    async function loadData() {
-      const { data } = await supabaseClient.from('addresses').select('*')
-      setData(data)
+    async function loadNameData() {
+      const { data } = await supabaseClient
+        .from('profiles')
+        .select('*')
+        .eq('user_id', user?.id)
+        .order('inserted_at', { ascending: false })
+        .limit(1)
+      setNameData(data)
     }
     // Only run query once user is logged in.
-    if (user) loadData()
+    if (user) {
+      loadNameData()
+    }
   }, [user])
 
   if (!user)
     return (
-      <Auth
-        redirectTo="http://localhost:3000/"
-        appearance={{ theme: ThemeSupa }}
-        supabaseClient={supabaseClient}
-        providers={['google', 'github']}
-        socialLayout="horizontal"
-      />
+      <h1>Loading...</h1>
     )
 
   return (
     <>
-      <button onClick={() => supabaseClient.auth.signOut()}>Sign out</button>
-      <p>user:</p>
-      <pre>{JSON.stringify(user, null, 2)}</pre>
-      <p>client-side data fetching with RLS</p>
-      <pre>{JSON.stringify(data, null, 2)}</pre>
+      <p>nameData:</p>
+      <pre>{JSON.stringify(nameData, null, 2)}</pre>
     </>
   )
 }
