@@ -4,18 +4,18 @@ import Navbar from "../components/Navbar/Navbar";
 import "../styles/globals.css";
 
 import { createBrowserSupabaseClient } from '@supabase/auth-helpers-nextjs'
-import { SessionContextProvider } from '@supabase/auth-helpers-react'
+import { SessionContextProvider, useUser } from '@supabase/auth-helpers-react'
 import { useState } from 'react'
 
 export default function MyApp({ Component, pageProps }) {
   // Create a new supabase browser client on every first render.
   const [supabaseClient] = useState(() => createBrowserSupabaseClient())
 
-  console.log(
-    'MyApp() supabaseClient\n', supabaseClient,
-    '\nMyApp() pageProps\n', pageProps,
-    '\nMyApp() Component\n', Component,
-  )
+  // console.log(
+  //   'MyApp() supabaseClient\n', supabaseClient,
+  //   '\nMyApp() pageProps\n', pageProps,
+  //   '\nMyApp() Component\n', Component,
+  // )
 
   return (
     <SessionContextProvider
@@ -35,7 +35,7 @@ export default function MyApp({ Component, pageProps }) {
         <meta name="theme-color" content="#ffffff" />
       </Head>    
       <Navbar />
-      <Component {...pageProps} />
+      <Component {...pageProps}/>
       <Footer />
     </SessionContextProvider>
   )

@@ -1,41 +1,72 @@
+/*************************************************************************
+
+// This version pulls in name data and passes it through multiple useEffects.
+
 import { useUser, useSupabaseClient } from '@supabase/auth-helpers-react'
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
 
 export default function Profile() {
-  const supabaseClient = useSupabaseClient()
+  const supabase = useSupabaseClient()
   const user = useUser()
-  const [nameData, setNameData] = useState()
+  const [nameData, setNameData] = useState([])
+  const [nextD, setNextD] = useState([])
+  const [loading, setLoading] = useState(true);
+  
+  // write a promise to retrieve data from supabase and then input it into nameData
 
-  useEffect(() => {
-    async function loadNameData() {
-      const { data } = await supabaseClient
-        .from('profiles')
-        .select('*')
-        .eq('user_id', user?.id)
-        .order('inserted_at', { ascending: false })
-        .limit(1)
+  async function loadNameData() {
+    // retrieve data from supabase and store in nameData
+    try {
+      setLoading(true);
+      const { data, error } = await supabase
+        .from("profiles")
+        .select("*")
+        .eq("user_id", user?.id);
+
+      if (error) throw error;
+      
       setNameData(data)
+
+    } catch (error) {
+      console.log('fetch error\n\t', error.message);
+    } finally {
+      setLoading(false);
     }
-    // Only run query once user is logged in.
-    if (user) {
-      loadNameData()
-    }
+
+  }
+  
+  useEffect(() => {
+    // This useEffect gets the users name data from supabase
+    if (!user) return;
+    loadNameData();
   }, [user])
 
-  if (!user)
-    return (
-      <h1>Loading...</h1>
-    )
+  useEffect(() => {
+    // This useEffect mocks passing nameData to formik.
+    if (!nameData) return;
+    setNextD(nameData)
+    // console.log('second useEffect\n', nameData)
+  }, [nameData])
+  
+  console.log(
+    'nameData\n\t', nameData, '\n',
+    'nextD\n\t', nextD, '\n',
+  )
+
+  if (loading) return <h1>loading...</h1>
 
   return (
-    <>
-      <p>nameData:</p>
-      <pre>{JSON.stringify(nameData, null, 2)}</pre>
-    </>
+    <h1>HTML</h1>
   )
 }
+*************************************************************************/
 
 /*************************************************************************
+ * 
+ * This version showed first name and last name.
+ * I'm going to cut this down to just the first and last name and forget about addresses.
+ * 
+ */
 import { Auth, ThemeSupa } from '@supabase/auth-ui-react'
 import { useUser, useSupabaseClient } from '@supabase/auth-helpers-react'
 import React, { useEffect, useState } from 'react'
@@ -58,59 +89,80 @@ const validationSchema = yup.object({
     .required('Last Name is required'),
 });
 
-// export default function Profile({ session }) {
-export default function Profile(Component, pageProps) {
-  console.log(
-    // 'Profile session\n', session, 
-    'Profile() pageProps\n', pageProps, 
-    '\nProfile() Component\n', Component, 
-  )
+export default function Profile() {
   const supabaseClient = useSupabaseClient()
   const user = useUser()
-  const router = useRouter();
   const [nameData, setNameData] = useState()
-  const [addressData, setAddressData] = useState()
-  
-  useEffect(() => {
-    // Only run query once user is logged in.
-    if (!user) {
-      router.push("/");
-      return
-    }
-    loadNames()
-    loadAddresses();
-  }, [])
+  const [loading, setLoading] = useState(true);
 
   async function loadNames() {
-    const { names } = await supabaseClient
-      .from('profiles')
-      .select('*')
-      .eq('user_id', user?.id)
+    const { data } = await supabaseClient
+      .from("profiles")
+      .select("*")
+      .eq("user_id", user?.id)
       .order('inserted_at', { ascending: false })
-    setNameData(names)
+    setNameData(data)
   }
-  
-  async function loadAddresses() {
-    const { addresses } = await supabaseClient
-      .from('addresses')
-      .select('*')
-      .eq('user_id', user?.id)
-      .order('id', { descending: true });
-    setAddressData(addresses)
+
+  async function loadNameData() {
+    // retrieve data from supabase and store in nameData
+    try {
+      setLoading(true);
+      const { data, error } = await supabaseClient
+        .from("profiles")
+        .select("*")
+        .eq("user_id", user?.id)
+        .order('inserted_at', { ascending: false });
+
+      if (error) throw error;
+      
+      setNameData(data)
+      setNameData({
+        firstname: data[0].firstname,
+        lastname: data[0].lastname,
+      })
+
+    } catch (error) {
+      console.log('fetch error\n\t', error.message);
+    } finally {
+      setLoading(false);
+    }
+
   }
 
   const formik = useFormik({
     initialValues: {
-      firstName: '',
-      lastName: '',
-      // firstName: nameData[0]?.firstname,
-      // lastName: nameData[0]?.lastname,
+      firstName: 'Joe',
+      lastName: 'Shmoe',
     },
     validationSchema: validationSchema,
+    enableReinitialize: true,
     onSubmit: (values) => {
       alert(JSON.stringify(values, null, 2));
     },
   });
+  
+  useEffect(() => {
+    // Only run query once user is logged in.
+    if (!user) return
+    loadNameData()
+  }, [user])
+
+  let loadedValues = {
+    firstname: 'Elon',
+    lastname: 'Musk',
+  }
+
+  useEffect(() => {
+    // This useEffect mocks passing nameData to formik.
+    if (!nameData) return;
+    // formik.initialValues = nameData
+  }, [nameData])
+
+  console.log(
+    'nameData\n\t', nameData, '\n',
+    'formik\n\t', formik, '\n',
+  )
 
   return (
     <div style={{
@@ -155,7 +207,7 @@ export default function Profile(Component, pageProps) {
   );
 }
 
-**************************************************************************/
+/**************************************************************************/
 
 // import { useRouter } from "next/router";
 // import React from 'react';
