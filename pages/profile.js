@@ -31,15 +31,6 @@ export default function Profile() {
   const [nameData, setNameData] = useState()
   const [loading, setLoading] = useState(true);
 
-  async function loadNames() {
-    const { data } = await supabaseClient
-      .from("profiles")
-      .select("*")
-      .eq("user_id", user?.id)
-      .order('inserted_at', { ascending: false })
-    setNameData(data)
-  }
-
   async function loadNameData() {
     // retrieve data from supabase and store in nameData
     try {
@@ -90,11 +81,11 @@ export default function Profile() {
   }, [])
   
   if (loading) return <h1>loading...</h1>
-  console.log(
-    'formik\n\t', formik, '\n',
-    'formik.touched.firstName\n\t', formik.touched.firstName, '\n',
-    'formik?.values?.firstName\n\t', formik?.values?.firstName, '\n',
-  )
+  // console.log(
+  //   'formik\n\t', formik, '\n',
+  //   'formik.touched.firstName\n\t', formik.touched.firstName, '\n',
+  //   'formik?.values?.firstName\n\t', formik?.values?.firstName, '\n',
+  // )
 
   return (
     <div style={{
