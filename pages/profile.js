@@ -1,26 +1,22 @@
 /*************************************************************************
  * 
  * This version showed first name and last name.
- * I'm going to cut this down to just the first and last name and forget about addresses.
  * 
  */
 import { useUser, useSupabaseClient } from '@supabase/auth-helpers-react'
 import React, { useEffect, useState, useRef } from 'react'
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
-import Box from '@mui/material/Box';
-import Stack from '@mui/material/Stack';
-// import { Auth, ThemeSupa } from '@supabase/auth-ui-react'
-// import { useRouter } from "next/router";
-// import styles from '../styles/Profile.module.css'
+import { Button, TextField, Box, Stack } from '@mui/material';
+import EditIcon from '@mui/icons-material/Edit';
+import CancelIcon from '@mui/icons-material/Cancel';
+import SaveIcon from '@mui/icons-material/Save';
 
 const validationSchema = yup.object({
-  firstName: yup
+  firstname: yup
     .string('Enter your first name')
     .required('First Name is required'),
-  lastName: yup
+  lastname: yup
     .string('Enter your last name')
     .required('Last Name is required'),
 });
@@ -30,9 +26,9 @@ export default function Profile() {
   const user = useUser()
   const [nameData, setNameData] = useState()
   const [loading, setLoading] = useState(true);
+  const [isReadOnly, setIsReadOnly] = useState(true);
 
   async function loadNameData() {
-    // retrieve data from supabase and store in nameData
     try {
       setLoading(true);
       const { data, error } = await supabaseClient
@@ -42,49 +38,77 @@ export default function Profile() {
         .order('inserted_at', { ascending: false });
 
       if (error) throw error;
-      
-      setNameData(data)
+      // Stores most recent name in the form of formik.values      
       setNameData({
         firstname: data[0].firstname,
         lastname: data[0].lastname,
       })
 
     } catch (error) {
-      console.log('fetch error\n\t', error.message);
+      console.log('select profile error\n\t', error.message);
     } finally {
       setLoading(false);
     }
 
   }
 
+  async function insertNameData(values) {
+    try {
+      // user.id is included for supabase RLS.
+      values.user_id = user.id;
+      const { error } = await supabaseClient
+        .from('profiles')
+        .insert(values);
+      delete values.user_id;
+      if (error) {
+        throw error
+      } else {
+        setNameData(values);
+      }
+    } catch (error) {
+      console.log('insert profile error\n\t', error.message);
+    }
+  }
+
   const formik = useFormik({
     initialValues: {
-      firstName: '',
-      lastName: '',
+      firstname: '',
+      lastname: '',
     },
     validationSchema: validationSchema,
     enableReinitialize: true,
     onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
+      // alert(JSON.stringify(values, null, 2));
+      setIsReadOnly(true)
+      insertNameData(values)
     },
   });
   
+  // Loads names once user is logged in.
   useEffect(() => {
-    // Only run query once user is logged in.
     if (!user) return
     loadNameData()
   }, [user])
 
+  // Initializes formik.values once names have been loaded.
   useEffect(() => {
-    formik.touched.firstName = false
-    formik.touched.lastName = false
+    if (!nameData) return
+    formik.setValues(nameData, false)
+  }, [nameData])
+
+  // Initializes formik.touched to false.
+  useEffect(() => {
+    formik.touched.firstname = false
+    formik.touched.lastname = false
   }, [])
   
   if (loading) return <h1>loading...</h1>
+
   // console.log(
-  //   'formik\n\t', formik, '\n',
-  //   'formik.touched.firstName\n\t', formik.touched.firstName, '\n',
-  //   'formik?.values?.firstName\n\t', formik?.values?.firstName, '\n',
+  //   'pre-return formik\n\t', formik, '\n',
+  //   'pre-return formik.touched.firstname\n\t', formik.touched.firstname, '\n',
+  //   'pre-return formik?.values?.firstname\n\t', formik?.values?.firstname, '\n',
+  //   'pre-return nameData?.firstname\n\t', nameData?.firstname, '\n',
   // )
 
   return (
@@ -95,41 +119,84 @@ export default function Profile() {
     }}>
       <Box
         component="form"
+        // sx={{
+        //   '& > :not(style)': { m: 1, width: '25ch' },
+        // }}
         sx={{
-          '& > :not(style)': { m: 1, width: '25ch' },
+          width: 500,
         }}
         noValidate
         autoComplete="off"
         onSubmit={formik.handleSubmit}
+        spacing={2}
       >
-        <Stack spacing={2} >
-          <TextField
-            id="firstName"
-            name="firstName"
-            label="First Name"
-            value={ formik.touched.firstName ? formik?.values?.firstName : nameData?.firstname }
-            onChange={(event) => {
-              formik.handleChange(event);
-              formik.touched.firstName = true;
-            }}
-            error={formik.touched.firstName && Boolean(formik.errors.firstName)}
-            helperText={formik.touched.firstName && formik.errors.firstName}
-          />
-          <TextField
-            id="lastName"
-            name="lastName"
-            label="Last Name"
-            value={ formik.touched.lastName ? formik?.values?.lastName : nameData?.lastname }
-            onChange={(event) => {
-              formik.handleChange(event);
-              formik.touched.lastName = true;
-            }}
-            error={formik.touched.lastName && Boolean(formik.errors.lastName)}
-            helperText={formik.touched.lastName && formik.errors.lastName}
-          />
-          <Button color="primary" variant="contained" type="submit">
-            Submit
-          </Button>
+        <Stack spacing={2}>
+          <h1 style={{marginBottom: '0', paddingBottom: '0'}}>Name </h1>
+          <Stack direction="row" spacing={2}>
+            <TextField
+              id="firstname"
+              name="firstname"
+              label="First Name"
+              InputProps={{
+                readOnly: isReadOnly,
+              }}
+              value={formik?.values?.firstname}
+              onChange={formik.handleChange}
+              error={formik.touched.firstname && Boolean(formik.errors.firstname)}
+              helperText={formik.touched.firstname && formik.errors.firstname}
+              variant={isReadOnly ? "standard" : "outlined"}
+            />
+            <TextField
+              id="lastname"
+              name="lastname"
+              label="Last Name"
+              InputProps={{
+                readOnly: isReadOnly,
+              }}
+              value={formik?.values?.lastname}
+              onChange={formik.handleChange}
+              error={formik.touched.lastname && Boolean(formik.errors.lastname)}
+              helperText={formik.touched.lastname && formik.errors.lastname}
+              variant={isReadOnly ? "standard" : "outlined"}
+            />
+          </Stack>
+
+          <Stack direction="row" spacing={2}>
+            <Button
+              color="primary"
+              variant="contained"
+              sx={{ height: 'min-content', width: 'min-content', margin: 'auto 0 auto 0' }}
+              disabled={!isReadOnly}
+              onClick={() => {
+                setIsReadOnly(false);
+                formik.touched.firstname = true;
+                formik.touched.lastname = true;
+              }}
+            >
+              <EditIcon />
+            </Button>
+            <Button
+              color="primary"
+              variant="contained"
+              sx={{ height: 'min-content', width: 'min-content', margin: 'auto 0 auto 0'}}
+              disabled={isReadOnly}
+              onClick={() => {
+                formik.setValues(nameData, false);
+                setIsReadOnly(true);
+              }}
+            >
+              <CancelIcon />
+            </Button>
+            <Button
+              color="primary"
+              variant="contained"
+              type="submit"
+              sx={{ height: 'min-content', width: 'min-content', margin: 'auto 0 auto 0'}}
+              disabled={isReadOnly}
+            >
+              <SaveIcon />
+            </Button>
+          </Stack>
         </Stack>
       </Box>
     </div>
