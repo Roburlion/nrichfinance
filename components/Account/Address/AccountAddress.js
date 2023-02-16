@@ -1,12 +1,15 @@
-/*************************************************************************
- * 
- * This version WORKS!
- * 
- */
+// ! NOTES --------------------------------------------------------------------
+// TODO:
+// ! --------------------------------------------------------------------------
 
+// * MAIN IMPORTS -------------------------------------------------------------
 import { useUser, useSupabaseClient } from '@supabase/auth-helpers-react'
 import React, { useEffect, useState, useRef } from 'react'
+
+// * MATERIAL UI IMPORTS ------------------------------------------------------
 import { Paper } from '@mui/material';
+
+// * COMPONENT IMPORTS --------------------------------------------------------
 import AccountAddressForm from './AccountAddressForm';
 
 export default function AccountAddressData() {
@@ -17,6 +20,17 @@ export default function AccountAddressData() {
   // ? For validating loaded data
   const dataNotLogged = useRef(true);
   
+  // * SUBSCRIBE TO CHANGES
+  // console.log('supabaseClient.getChannels().length: \n\t', supabaseClient.getChannels().length)
+  supabaseClient
+    .channel('any')
+    .on('postgres_changes', { event: '*', schema: 'public', table: 'addresses' }, payload => {
+      // console.log('Change received!', payload)
+      loadAddressesData()
+    })
+    .subscribe()
+  // console.log('supabaseClient.getChannels(): \n\t', supabaseClient.getChannels())
+
   // !* RENAME: load...Data()
   /***
    * Loads data from the supabase table named addresses into values.

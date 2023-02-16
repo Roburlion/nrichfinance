@@ -6,7 +6,7 @@
 // TODO: change profile to personal_info and add fields for dob, passport number (or have this in a special table?), etc.
 
 import { useUser, useSupabaseClient } from '@supabase/auth-helpers-react'
-import React, { useEffect, useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Paper } from '@mui/material';
 import AccountNameForm from './AccountNameForm';
 
@@ -26,10 +26,13 @@ export default function AccountNameData() {
         .order('inserted_at', { ascending: false });
 
       if (error) throw error;
-      // Stores most recent name in the form of formik.values      
+      // Stores most recent name in the form of formik.values     
+      // console.log('data: ', data, '\n\t', data[0].dob === null ? '' : data[0].dob) 
+      // console.log('data: ', data, '\n\t', data[0].dob === null ? 'true' : 'false') 
       setNameData({
         firstname: data[0].firstname,
         lastname: data[0].lastname,
+        dob: data[0].dob,
       })
 
     } catch (error) {
