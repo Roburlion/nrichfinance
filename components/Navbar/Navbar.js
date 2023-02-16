@@ -41,8 +41,8 @@ const Navbar = ({ session }) => {
               user ?
               (
                 <ul className={styles.navContent}>
-                  <Link href="/profile">
-                    <li className={styles.name}>Profile</li>
+                  <Link href="/account">
+                    <li className={styles.name}>Account</li>
                   </Link>
                   <button
                     className={styles.buttons}
