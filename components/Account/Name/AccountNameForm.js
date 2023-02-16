@@ -93,7 +93,9 @@ export default function AccountNameForm({ names }) {
           spacing={2}
         >
           <Stack spacing={2}>
-            <h2 style={{margin: '0', padding: '0'}}>Name </h2>
+            
+            <h2 style={{margin: '0', padding: '0'}}>Personal Info</h2>
+
             <Stack direction="row" spacing={2}>
               <TextField
                 id="firstname"
