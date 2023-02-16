@@ -7,12 +7,12 @@
 // ! IMPORTS ------------------------------------------------------------------
 // * MAIN IMPORTS -------------------------------------------------------------
 import { useUser, useSupabaseClient } from '@supabase/auth-helpers-react'
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 
 // * FORM IMPORTS -------------------------------------------------------------
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-import { Button, TextField, Box, Stack, Paper } from '@mui/material';
+import { Button, Box, Stack, Paper } from '@mui/material';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import SaveIcon from '@mui/icons-material/Save';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -180,7 +180,7 @@ export default function AccountNameForm({ address }) {
                 sx={{ height: 'min-content', width: 'min-content', margin: 'auto 0 auto 0'}}
                 onClick={() => {
                   formik.setValues(address, false);
-                  console.log('address\n\t', address)
+                  // console.log('address\n\t', address)
                 }}
               >
                 <RestartAltIcon />

@@ -15,16 +15,11 @@ import React, { useEffect, useState } from 'react'
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { Button, TextField, Box, Stack, Paper } from '@mui/material';
-import EditIcon from '@mui/icons-material/Edit';
-import CancelIcon from '@mui/icons-material/Cancel';
+import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import SaveIcon from '@mui/icons-material/Save';
 
-// * DATE PICKER IMPORTS -------------------------------------------------------
-import dayjs from 'dayjs';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
-// import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker';
+// * FORM COMPONENT IMPORTS ---------------------------------------------------
+import { DateInput } from '../DateInput';
 
 // ! --------------------------------------------------------------------------
 // * FORM VARIABLE ------------------------------------------------------------
@@ -47,28 +42,20 @@ export default function AccountNameForm({ names }) {
 
   // * FORM VARIABLES ---------------------------------------------------------
   const [formData, setFormData] = useState(names)
-  const [isReadOnly, setIsReadOnly] = useState(true);
   const formik = useFormik({
     initialValues: formData,
     validationSchema: validationSchema,
     enableReinitialize: true,
     onSubmit: (values) => {
-      // alert(JSON.stringify(values, null, 2));
-      setIsReadOnly(true)
       insertNameData(values)
     },
   });
-
-  // * DATE PICKER VARIABLES --------------------------------------------------
-  const [dob, setDob] = useState(dayjs(names.dob));
 
   // ! ------------------------------------------------------------------------
   // * FORM HELPER FUNCTIONS --------------------------------------------------
   async function insertNameData(values) {
     // * called from formik.onSubmit()
     try {
-      alert(JSON.stringify('insertNameData', null, 2));
-
       // user.id is included for supabase RLS.
       values.user_id = user.id;
       const { error } = await supabaseClient
@@ -78,20 +65,12 @@ export default function AccountNameForm({ names }) {
       if (error) {
         throw error
       } else {
-        // formik.initialValues = values;
         setFormData(values);
       }
     } catch (error) {
       console.log('insert profile error\n\t', error.message);
     }
   }
-  
-  // ! ------------------------------------------------------------------------
-  // * USE EFFECTS ------------------------------------------------------------
-  useEffect(() => {
-    formik.touched.firstname = false
-    formik.touched.lastname = false
-  }, [])
 
   // ! ------------------------------------------------------------------------
   // * RETURN -----------------------------------------------------------------
@@ -120,61 +99,39 @@ export default function AccountNameForm({ names }) {
                 id="firstname"
                 name="firstname"
                 label="First Name"
-                InputProps={{
-                  readOnly: isReadOnly,
-                }}
                 value={formik?.values?.firstname}
                 onChange={formik.handleChange}
                 error={formik.touched.firstname && Boolean(formik.errors.firstname)}
                 helperText={formik.touched.firstname && formik.errors.firstname}
-                variant={isReadOnly ? "standard" : "outlined"}
               />
               <TextField
                 id="lastname"
                 name="lastname"
                 label="Last Name"
-                InputProps={{
-                  readOnly: isReadOnly,
-                }}
                 value={formik?.values?.lastname}
                 onChange={formik.handleChange}
                 error={formik.touched.lastname && Boolean(formik.errors.lastname)}
                 helperText={formik.touched.lastname && formik.errors.lastname}
-                variant={isReadOnly ? "standard" : "outlined"}
               />
+              <DateInput name='dob' label='Date of Birth' formik={formik} />
             </Stack>
             <Stack direction="row" spacing={2}>
               <Button
                 color="primary"
                 variant="contained"
-                sx={{ height: 'min-content', width: 'min-content', margin: 'auto 0 auto 0' }}
-                disabled={!isReadOnly}
-                onClick={() => {
-                  setIsReadOnly(false);
-                  formik.touched.firstname = true;
-                  formik.touched.lastname = true;
-                }}
-              >
-                <EditIcon />
-              </Button>
-              <Button
-                color="primary"
-                variant="contained"
                 sx={{ height: 'min-content', width: 'min-content', margin: 'auto 0 auto 0'}}
-                disabled={isReadOnly}
                 onClick={() => {
-                  formik.setValues(formData, false);
-                  setIsReadOnly(true);
+                  formik.setValues(address, false);
+                  // console.log('address\n\t', address)
                 }}
               >
-                <CancelIcon />
+                <RestartAltIcon />
               </Button>
               <Button
                 color="primary"
                 variant="contained"
                 type="submit"
                 sx={{ height: 'min-content', width: 'min-content', margin: 'auto 0 auto 0'}}
-                disabled={isReadOnly}
               >
                 <SaveIcon />
               </Button>
