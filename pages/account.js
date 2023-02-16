@@ -1,10 +1,18 @@
-/* create a nextjs react page that pulls data from a supabase table named profiles with a crud mui form for profiles.firstname and profiles.lastname */
+// ! --------------------------------------------------------------------------
+// TODO: Lift supabaseClient up to this page.
+// TODO: Lift supabase auth useUser up to this page.
+// TODO: Show 'permission denied' error message if user is not logged in.
+// ! --------------------------------------------------------------------------
 
+// * IMPORTS ------------------------------------------------------------------
 import { useState } from 'react';
 import AccountName from '../components/Account/Name/AccountName';
 import AccountAddress from '../components/Account/Address/AccountAddress';
 
+// * COMPONENT ----------------------------------------------------------------
 export default function Account() {
+  
+  // * RETURN -----------------------------------------------------------------
   return (
     <div style={{
       width: '100%',

@@ -3,9 +3,8 @@
 // TODO: add validationSchema
 // // TODO: Clean up readOnly comments
 // ? Do I want to use the mobile date picker for mobile devices?
-// ! --------------------------------------------------------------------------
 
-// * --------------------------------------------------------------------------
+// ! IMPORTS ------------------------------------------------------------------
 // * MAIN IMPORTS -------------------------------------------------------------
 import { useUser, useSupabaseClient } from '@supabase/auth-helpers-react'
 import React, { useEffect, useState } from 'react'
@@ -18,13 +17,6 @@ import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import SaveIcon from '@mui/icons-material/Save';
 import DeleteIcon from '@mui/icons-material/Delete';
 
-// * DATE PICKER IMPORTS -------------------------------------------------------
-import dayjs from 'dayjs';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
-// import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker';
-
 // * DROP DOWN IMPORTS --------------------------------------------------------
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
@@ -32,9 +24,10 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 
 // * FORM COMPONENT IMPORTS ---------------------------------------------------
-import { TextInput } from '../../TextInput';
+import { TextInput } from '../TextInput';
+import { DateInput } from '../DateInput';
 
-// * --------------------------------------------------------------------------
+// ! VARIABLES ----------------------------------------------------------------
 // * FORM VARIABLE ------------------------------------------------------------
 const validationSchema = yup.object({
   address: yup
@@ -58,7 +51,7 @@ const validationSchema = yup.object({
     .string('Enter your move out date or leave blank if you are still living here')
 });
 
-// * --------------------------------------------------------------------------
+// ! COMPONENTS ---------------------------------------------------------------
 // * MAIN COMPONENT -----------------------------------------------------------
 export default function AccountNameForm({ address }) {
   // * MAIN VARIABLES ---------------------------------------------------------
@@ -84,12 +77,8 @@ export default function AccountNameForm({ address }) {
     },
   });
   
-  // * DATE PICKER VARIABLES --------------------------------------------------
-  const [moveOut, setMoveOut] = useState(dayjs(address.move_out));
-  const [moveIn, setMoveIn] = useState(dayjs(address.move_in));
-
-  // * ------------------------------------------------------------------------
-  // * FORM HELPER FUNCTIONS --------------------------------------------------
+  // ! HELPER FUNCTIONS -------------------------------------------------------
+  // * FORM -------------------------------------------------------------------
   const cleanValues = (values) => {
     // * called by the formik.onSubmit()
     delete values.address_number;    // Not in the supabase table
@@ -133,25 +122,8 @@ export default function AccountNameForm({ address }) {
       console.log('insert profile error\n\t', error.message);
     }
   }
-
-  // * DATE PICKER HELPER FUNCTIONS -------------------------------------------
-  const handleChangeMoveIn = (newValue) => {
-    // * called by <DesktopDatePicker onSubmit() /> 
-    setMoveIn(newValue);
-    let dateString = newValue?.format('YYYY-MM-DD') ?? '';
-    dateString = dateString === 'Invalid date' ? '' : dateString;
-    formik.setFieldValue('move_in', dateString, true);
-  };
   
-  const handleChangeMoveOut = (newValue) => {
-    // * called by <DesktopDatePicker onSubmit() /> 
-    setMoveOut(newValue);
-    let dateString = newValue?.format('YYYY-MM-DD') ?? '';
-    dateString = dateString === 'Invalid date' ? '' : dateString;
-    formik.setFieldValue('move_out', dateString, true);
-  };
-  
-  // * ------------------------------------------------------------------------
+  // ! RENDER -----------------------------------------------------------------
   // * RETURN -----------------------------------------------------------------
   return (
     <>
@@ -179,40 +151,12 @@ export default function AccountNameForm({ address }) {
               <TextInput name="city" label="City" formik={formik} />
               <TextInput name="state" label="State" formik={formik} />
               <TextInput name="pin_code" label="Zip Code" formik={formik} />
-
-              <LocalizationProvider dateAdapter={AdapterDayjs}>
-                  <DesktopDatePicker
-                    id="move_in"
-                    name="move_in"
-                    label="Move In Date"
-                    inputFormat="MM/DD/YYYY"
-                    value={moveIn}
-                    onChange={handleChangeMoveIn}
-                    onBlur={formik.handleBlur}
-                    error={formik.touched.pin_code && Boolean(formik.errors.pin_code)}
-                    helperText={formik.touched.pin_code && formik.errors.pin_code}
-                    renderInput={(params) => <TextField {...params} />}
-                  />
-                  {
-                    formik?.values?.is_current_residence
-                      ?
-                    null 
-                      :
-                    <DesktopDatePicker
-                      id="move_out"
-                      name="move_out"
-                      label={formik?.values?.is_current_residence ? " " : "Move Out Date"}
-                      inputFormat="MM/DD/YYYY"
-                      disabled={formik?.values?.is_current_residence}
-                      value={formik?.values?.is_current_residence ? null : moveOut}
-                      onChange={handleChangeMoveOut}
-                      onBlur={formik.handleBlur}
-                      error={formik.touched.pin_code && Boolean(formik.errors.pin_code)}
-                      helperText={formik.touched.pin_code && formik.errors.pin_code}
-                      renderInput={(params) => <TextField {...params} />}
-                    />
-                  }
-              </LocalizationProvider>
+              <DateInput name='move_in' label='Move In Date' formik={formik} />
+              {
+                formik?.values?.is_current_residence
+                  ? null 
+                  : <DateInput name='move_out' label='Move Out Date' formik={formik} />
+              }
               <FormControl fullWidth>
                 <InputLabel id="is_current_residence">Current Residence Status</InputLabel>
                 <Select
@@ -236,6 +180,7 @@ export default function AccountNameForm({ address }) {
                 sx={{ height: 'min-content', width: 'min-content', margin: 'auto 0 auto 0'}}
                 onClick={() => {
                   formik.setValues(address, false);
+                  console.log('address\n\t', address)
                 }}
               >
                 <RestartAltIcon />
