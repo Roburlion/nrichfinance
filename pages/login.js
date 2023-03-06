@@ -18,7 +18,7 @@ export default function Login () {
               appearance={{ theme: ThemeSupa }}
               theme='dark'
               supabaseClient={supabaseClient}
-              providers={['github', 'google']}
+              providers={['github']}
               socialLayout="vertical"
             />
         </div>
