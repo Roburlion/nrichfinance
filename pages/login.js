@@ -1,59 +1,29 @@
 import { useRouter } from "next/router";
-import { useState } from "react";
-import styles from "../styles/Login.module.css";
-import { supabase } from "../utils/supabase";
+import { Auth, ThemeSupa } from '@supabase/auth-ui-react'
+import { useUser, useSupabaseClient } from '@supabase/auth-helpers-react'
+import styles from '../styles/Login.module.css'
 
-const Login = () => {
-  const initialState = {
-    email: "",
-    password: "",
-  };
-
+export default function Login () {
+  const supabaseClient = useSupabaseClient()
+  const user = useUser()
   const router = useRouter();
 
-  const [form, setForm] = useState(initialState);
-
-  const { email, password } = form;
-
-  const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-  };
-  return (
-    <div className={styles.container}>
-      <div className={styles.formContainer}>
-        <input
-          type="text"
-          value={email}
-          name="email"
-          onChange={handleChange}
-          className={styles.input}
-          placeholder="Enter your email"
-        />
-        <input
-          type="password"
-          value={password}
-          name="password"
-          onChange={handleChange}
-          className={styles.input}
-          placeholder="Enter your password"
-        />
-        <button
-          onClick={async () => {
-            const { error } = await supabase.auth.signIn({
-              email,
-              password,
-            });
-            if (error) alert(error.message);
-            // push to home page
-            router.push("/profile");
-          }}
-          className={styles.button}
-        >
-          Log In
-        </button>
+  if (!user) {
+    return (
+      // <Auth supabaseClient={supabase} />
+      <div className={ styles.container }>
+        <div className={ styles.authWrapper }>
+            <Auth
+              redirectTo="http://localhost:3000/"
+              appearance={{ theme: ThemeSupa }}
+              theme='dark'
+              supabaseClient={supabaseClient}
+              providers={['google', 'github']}
+              socialLayout="vertical"
+            />
+        </div>
       </div>
-    </div>
-  );
-};
-
-export default Login;
+    )
+  }
+  router.push("/account");
+}

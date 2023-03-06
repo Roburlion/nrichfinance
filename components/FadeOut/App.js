@@ -12,7 +12,9 @@ export default function App(props) {
     '/': 'Welcome',
     '/about': 'About',
     '/contact': 'Contact',
-    '/profile': 'Profile',
+    '/account': 'Account',
+    '/signup': 'Sign up',
+    '/login': 'Login',
   }
 
   const pageTitle = routes[useRouter().pathname]

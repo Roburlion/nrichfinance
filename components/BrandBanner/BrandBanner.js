@@ -1,11 +1,11 @@
 import Image from 'next/image';
-import style from './BrandBanner.module.css';
+import styles from './BrandBanner.module.css';
 import image from './logo_banner.svg'
 
 export default function App() {
   return (
-    <div style={{ width: '100%', height: '500px', padding: '0 10%', backgroundColor: '#07305d' }}>
-      <div style={{ position: 'relative', width: '100%', height: '500px' }}>
+    <div className={styles.bannerWrapper}>
+      <div className={styles.imageWrapper}>
         <Image
           alt="Logo Banner"
           src={image}
@@ -13,6 +13,7 @@ export default function App() {
           style={{
             objectFit: 'fill',
           }}
+          priority={true}
         />
       </div>
     </div>
