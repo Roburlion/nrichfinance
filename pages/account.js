@@ -7,6 +7,7 @@
 // * IMPORTS ------------------------------------------------------------------
 import { useState } from 'react';
 import AccountName from '../components/Account/Name/AccountName';
+import AccountPhone from '../components/Account/Phone/AccountPhone';
 import AccountAddress from '../components/Account/Address/AccountAddress';
 
 // * COMPONENT ----------------------------------------------------------------
@@ -22,6 +23,7 @@ export default function Account() {
     }}>
       <h1>Welcome to your Account page</h1>
       <AccountName />
+      <AccountPhone />
       <AccountAddress />
     </div>
   )
