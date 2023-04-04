@@ -14,7 +14,7 @@ import AccountPhoneForm from './AccountPhoneForm';
 
 // ! COMPONENTS ---------------------------------------------------------------
 // * MAIN COMPONENT -----------------------------------------------------------
-export default function AccountAddressData() {
+export default function AccountPhoneData() {
   // ! VARIABLES --------------------------------------------------------------
   // * SUPABASE VARIABLES -----------------------------------------------------
   const supabaseClient = useSupabaseClient()
@@ -28,25 +28,25 @@ export default function AccountAddressData() {
   // console.log('supabaseClient.getChannels().length: \n\t', supabaseClient.getChannels().length)
   supabaseClient
     .channel('any')
-    .on('postgres_changes', { event: '*', schema: 'public', table: 'addresses' }, payload => {
+    .on('postgres_changes', { event: '*', schema: 'public', table: 'tbl_phone_numbers' }, payload => {
       // console.log('Change received!', payload)
-      loadAddressesData()
+      loadData()
     })
     .subscribe()
   // console.log('supabaseClient.getChannels(): \n\t', supabaseClient.getChannels())
 
   // ! HELPER FUNCTIONS -------------------------------------------------------
   // * USE EFFECT HELPER FUNCTIONS --------------------------------------------
-  async function loadAddressesData() {
+  async function loadData() {
     try {
       setLoading(true);
       const { data, error } = await supabaseClient
         // !* CHANGE: table name
-        .from("addresses")
+        .from("tbl_phone_numbers")
         .select("*")
         .eq("user_id", user?.id)
-        .eq('is_deleted', false)
-        .order('move_in', { ascending: false })
+        .is('deleted', null)
+        .order('created', { ascending: false })
 
       if (error) throw error;
       
@@ -63,9 +63,11 @@ export default function AccountAddressData() {
   // * USE EFFECTS ------------------------------------------------------------
   useEffect(() => {   // Loads names once user is logged in.
     if (!user) return
-    loadAddressesData()
+    loadData()
   }, [user])
   
+  console.log('formData: \n\t', formData)
+
   // ! RENDER -----------------------------------------------------------------
   // * RETURN -----------------------------------------------------------------
   return (
@@ -76,11 +78,7 @@ export default function AccountAddressData() {
       }}
     >
       <h2 style={{margin: '0', padding: '0'}}>
-        {
-          !formData 
-            ? 'Please enter an address' 
-            : 'Addresses'
-        }
+        Phone Numbers
       </h2>
       {
         loading
@@ -93,41 +91,31 @@ export default function AccountAddressData() {
               <h1>loading...</h1>
             </Paper>
           : <>
-              {formData?.map((address, index) => {
+              {formData?.map((phone, index) => {
                 return (
                   <AccountPhoneForm 
-                    key={address.id} 
-                    address={{
-                      address_number: index + 1,
-                      id: address.id,
-                      address: address.address,
-                      apartment: address.apartment,
-                      city: address.city,
-                      state: address.state,
-                      pin_code: address.pin_code,
-                      move_in: address.move_in,
-                      move_out: address.move_out,
-                      is_current_residence: address.is_current_residence,
-                      is_deleted: address.is_deleted,
-                      is_only_address: false,
+                    key={phone.id} 
+                    phone={{
+                      // address_number: index + 1,
+                      id: phone.id,
+                      type: phone.type,
+                      dict_phone_country_codes_id: phone.dict_phone_country_codes_id,
+                      phone_number: phone.phone_number,
+                      deleted: phone.deleted,
+                      is_only_phone: false,
                     }}
                   />
                 )
               })}
               <AccountPhoneForm 
-                address={{
-                  address_number: formData?.length ? formData?.length + 1 : 1,
+                phone={{
+                  // address_number: index + 1,
                   id: '',
-                  address: '',
-                  apartment: '',
-                  city: '',
-                  state: '',
-                  pin_code: '',
-                  move_in: '',
-                  move_out: '',
-                  is_current_residence: false,
-                  is_deleted: false,
-                  is_only_address: !formData ? true : false,
+                  type: '',
+                  dict_phone_country_codes_id: '',
+                  phone_number: '',
+                  deleted: '',
+                  is_only_phone: !formData ? true : false,
                 }}
               />
             </>
