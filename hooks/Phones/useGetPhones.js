@@ -1,9 +1,4 @@
-import { createClient } from '@supabase/supabase-js'
-
-const supabase = createClient(
-  'https://eobjtkqhhirmaykstnuo.supabase.co',
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVvYmp0a3FoaGlybWF5a3N0bnVvIiwicm9sZSI6ImFub24iLCJpYXQiOjE2NzM5MzEwNDgsImV4cCI6MTk4OTUwNzA0OH0.zGTNwhd3bQB52-suLh6pH2z8BiL09sXOJJM07pQ_3-Y'
-)
+import { supabase } from '../../utils/supabase'
 
 export async function getPhones( userId = null) {
   let { data, error } = await supabase
