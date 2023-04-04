@@ -1,4 +1,19 @@
 import { supabase } from '../../utils/supabase'
+import { useState, useEffect } from 'react';
+
+export function usePhones(userId) {
+  const [phones, setPhones] = useState([]);
+
+  async function fetchPhones() {
+    setPhones(await getPhones(userId));
+  }
+
+  useEffect(() => {
+    fetchPhones();
+  }, []);
+  // console.log('phones =>', phones);
+  return phones;
+}
 
 export async function getPhones( userId = null) {
   let { data, error } = await supabase
