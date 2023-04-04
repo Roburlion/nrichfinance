@@ -3,12 +3,16 @@
 import '@testing-library/jest-dom'
 import { getPhones } from '../../hooks/Phones/useGetPhones'
 
-
 const NONE = 'ba65dc5d-5278-4e6e-915b-ad555f5d0f2a'
 const ONE = '808eec08-136d-45de-86dc-bb28310a8119'
 const MANY = '5b35f1c7-1738-4583-b9d3-a365278236e2'
 
-
+describe('env vars', () => {
+  it('should have the url', () => {
+    expect(process.env.NEXT_PUBLIC_SUPABASE_URL)
+      .toBe('https://eobjtkqhhirmaykstnuo.supabase.co')
+  })
+})
 
 describe('getPhones', () => {
   it('should return an empty array for NONE', async () => {
