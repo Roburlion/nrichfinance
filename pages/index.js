@@ -28,7 +28,7 @@ export default function Home({ session }) {
   ]
   return (
     <>
-      <BrandBanner />
+      {/* <BrandBanner /> */}
       <HeroBanner
         image={require('../components/HeroBanner/hands_and_laptop_1920.jpg').default.src}
         title='Welcome to NRich&nbsp;Finance'

@@ -34,7 +34,7 @@ export default function About({ session }) {
   
   return (
     <>
-      <BrandBanner />
+      {/* <BrandBanner /> */}
       <HeroBanner
         image={require('../components/HeroBanner/dallas_sunset_1920.jpg').default.src}
         title='NRich&nbsp;Finance'
