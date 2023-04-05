@@ -71,54 +71,45 @@ export default function AccountPhoneData() {
   // ! RENDER -----------------------------------------------------------------
   // * RETURN -----------------------------------------------------------------
   return (
-    <Paper
-      sx={{
-        padding: 2,
-        margin: 2,
-      }}
-    >
-      <h2 style={{margin: '0', padding: '0'}}>
-        Phone Numbers
-      </h2>
+    <Paper sx={{ padding: 2, margin: 2 }}>
+      <h2 style={{ margin: '0', padding: '0' }}>Phone Numbers</h2>
       {
-        loading
-          ? <Paper
-              sx={{
-                padding: 2,
-                margin: 2,
+        loading ? (
+          <Paper sx={{ padding: 2, margin: 2 }}> 
+            <h1>loading...</h1>
+          </Paper>
+        ) : (
+          <>
+            {formData?.map((phone, index) => {
+              return (
+                <AccountPhoneForm 
+                  key={phone.id} 
+                  phone={{
+                    // address_number: index + 1,
+                    id: phone.id,
+                    type: phone.type,
+                    index: index,
+                    dict_phone_country_codes_id: phone.dict_phone_country_codes_id,
+                    phone_number: phone.phone_number,
+                    deleted: phone.deleted,
+                    is_only_phone: false,
+                  }}
+                />
+              )
+            })}
+            <AccountPhoneForm 
+              phone={{
+                // address_number: index + 1,
+                id: '',
+                type: '',
+                dict_phone_country_codes_id: '',
+                phone_number: '',
+                deleted: '',
+                is_only_phone: !formData ? true : false,
               }}
-            > 
-              <h1>loading...</h1>
-            </Paper>
-          : <>
-              {formData?.map((phone, index) => {
-                return (
-                  <AccountPhoneForm 
-                    key={phone.id} 
-                    phone={{
-                      // address_number: index + 1,
-                      id: phone.id,
-                      type: phone.type,
-                      dict_phone_country_codes_id: phone.dict_phone_country_codes_id,
-                      phone_number: phone.phone_number,
-                      deleted: phone.deleted,
-                      is_only_phone: false,
-                    }}
-                  />
-                )
-              })}
-              <AccountPhoneForm 
-                phone={{
-                  // address_number: index + 1,
-                  id: '',
-                  type: '',
-                  dict_phone_country_codes_id: '',
-                  phone_number: '',
-                  deleted: '',
-                  is_only_phone: !formData ? true : false,
-                }}
-              />
-            </>
+            />
+          </>
+        )    
       }
     </Paper>
   );

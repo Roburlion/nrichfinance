@@ -1,16 +1,23 @@
 import { supabase } from '../../utils/supabase'
+import { useSupabaseClient } from '@supabase/auth-helpers-react';
 import { useState, useEffect } from 'react';
 
-export function usePhones(userId) {
+export function usePhones(user) {
   const [phones, setPhones] = useState([]);
 
-  async function fetchPhones() {
-    setPhones(await getPhones(userId));
+  async function fetchPhones(user) {
+    try {
+      const { data, error } = await getPhones(user.id);
+      if (error) throw error;
+      setPhones(data);
+    } catch (error) {
+      console.log('select profile error\n\t', error.message);
+    }
   }
 
   useEffect(() => {
-    fetchPhones();
-  }, []);
+    if(user) fetchPhones(user);
+  }, [user]);
   // console.log('phones =>', phones);
   return phones;
 }
@@ -24,6 +31,33 @@ export async function getPhones( userId = null) {
     .order('created', { ascending: false })
   // console.log('data\n', data, '\n\nerror\n', error)
   return { data, error }
+}
+
+export function useAddPhone(user) {
+  const [isAddingPhone, setIsAddingPhone] = useState(false);
+  const supabase = useSupabaseClient();
+
+  async function addPhone(event) {
+    event.preventDefault();
+    setIsAddingPhone(true);
+    const phoneNumber = event.target[0].value;
+
+    try {
+      const { error } = await supabase
+        .from("tbl_phone_numbers")
+        .insert({ 
+          user_id: user.id, 
+          phone_number: phoneNumber 
+        })
+      if (error) throw error;
+    } catch (error) {
+      console.log('addPhone: insert phone number error\n\t', error.message);
+    } finally {
+      setIsAddingPhone(false);
+    }
+  }
+
+  return { addPhone, isAddingPhone };
 }
 
 /*

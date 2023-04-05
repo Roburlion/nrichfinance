@@ -10,6 +10,8 @@ import AccountName from '../components/Account/Name/AccountName';
 import AccountPhone from '../components/Account/Phone/AccountPhone';
 import AccountAddress from '../components/Account/Address/AccountAddress';
 
+import Phones from '../components/Account/Phones/Phones';
+
 // * COMPONENT ----------------------------------------------------------------
 export default function Account() {
   
@@ -23,7 +25,8 @@ export default function Account() {
     }}>
       <h1>Welcome to your Account page</h1>
       <AccountName />
-      <AccountPhone />
+      <Phones />
+      {/* <AccountPhone /> */}
       <AccountAddress />
     </div>
   )

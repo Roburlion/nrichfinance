@@ -45,7 +45,7 @@ const validationSchema = yup.object({
 // * MAIN COMPONENT -----------------------------------------------------------
 export default function AccountPhoneForm({ phone }) {
 
-  console.log('AccountPhoneForm.js\n\tphone: ', phone)
+  // console.log('AccountPhoneForm.js\n\tphone: ', phone)
 
   // * MAIN VARIABLES ---------------------------------------------------------
   const supabaseClient = useSupabaseClient()
@@ -118,74 +118,74 @@ export default function AccountPhoneForm({ phone }) {
   
   // ! RENDER -----------------------------------------------------------------
   // * RETURN -----------------------------------------------------------------
-  // return (
-  //   <>
-  //     <Paper
-  //       sx={{
-  //         padding: 2,
-  //         margin: 2,
-  //       }}
-  //     >
-  //       { // * TITLE
-  //         phone.is_only_phone
-  //           ? null
-  //           : <h3 style={{margin: '0', padding: '0'}}>
-  //               Phone {/*address.address_number*/}
-  //             </h3>
-  //       }
-  //       <Box
-  //         component="form"
-  //         sx={{
-  //           width: 500,
-  //         }}
-  //         noValidate
-  //         autoComplete="off"
-  //         onSubmit={formik.handleSubmit}
-  //         spacing={2}
-  //       >
-  //         <Stack spacing={2}>
-  //           <Stack direction="column" spacing={2}>
-  //             <TextInput name="phone_number" label="Phone Number" formik={formik} />
-  //           </Stack>
+  return (
+    <>
+      <Paper
+        sx={{
+          padding: 2,
+          margin: 2,
+        }}
+      >
+        { // * TITLE
+          phone.is_only_phone
+            ? null
+            : <h3 style={{margin: '0', padding: '0'}}>
+                Phone {phone.index + 1}
+              </h3>
+        }
+        <Box
+          component="form"
+          sx={{
+            width: 500,
+          }}
+          noValidate
+          autoComplete="off"
+          onSubmit={formik.handleSubmit}
+          spacing={2}
+        >
+          <Stack spacing={2}>
+            <Stack direction="column" spacing={2}>
+              <TextInput name="phone_number" label="Phone Number" formik={formik} />
+            </Stack>
 
-  //           <Stack direction="row" spacing={2}>
-  //             <Button
-  //               color="primary"
-  //               variant="contained"
-  //               sx={{ height: 'min-content', width: 'min-content', margin: 'auto 0 auto 0'}}
-  //               onClick={() => {
-  //                 formik.setValues(address, false);
-  //                 // console.log('address\n\t', address)
-  //               }}
-  //             >
-  //               <RestartAltIcon />
-  //             </Button>
-  //             <Button
-  //               color="primary"
-  //               variant="contained"
-  //               type="submit"
-  //               sx={{ height: 'min-content', width: 'min-content', margin: 'auto 0 auto 0'}}
-  //             >
-  //               <SaveIcon />
-  //             </Button>
-  //             {
-  //               address?.id
-  //               ? <Button
-  //                   color="primary"
-  //                   variant="contained"
-  //                   sx={{ height: 'min-content', width: 'min-content', margin: 'auto 0 auto 0'}}
-  //                   onClick={() => {
-  //                     removeTableRowWithOldAddress(address?.id)
-  //                   }}
-  //                 >
-  //                   <DeleteIcon />
-  //                 </Button>
-  //               : null
-  //             }
-  //           </Stack>
-  //         </Stack>
-  //       </Box>
-  //     </Paper>
-  //   </>
-  // );
+            <Stack direction="row" spacing={2}>
+              <Button
+                color="primary"
+                variant="contained"
+                sx={{ height: 'min-content', width: 'min-content', margin: 'auto 0 auto 0'}}
+                onClick={() => {
+                  formik.setValues(address, false);
+                  // console.log('address\n\t', address)
+                }}
+              >
+                <RestartAltIcon />
+              </Button>
+              <Button
+                color="primary"
+                variant="contained"
+                type="submit"
+                sx={{ height: 'min-content', width: 'min-content', margin: 'auto 0 auto 0'}}
+              >
+                <SaveIcon />
+              </Button>
+              {
+                phone?.id
+                ? <Button
+                    color="primary"
+                    variant="contained"
+                    sx={{ height: 'min-content', width: 'min-content', margin: 'auto 0 auto 0'}}
+                    onClick={() => {
+                      removeTableRowWithOldAddress(phone?.id)
+                    }}
+                  >
+                    <DeleteIcon />
+                  </Button>
+                : null
+              }
+            </Stack>
+          </Stack>
+        </Box>
+      </Paper>
+    </>
+  );
 }
