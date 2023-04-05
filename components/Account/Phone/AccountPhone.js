@@ -66,7 +66,7 @@ export default function AccountPhoneData() {
     loadData()
   }, [user])
   
-  console.log('formData: \n\t', formData)
+  // console.log('formData: \n\t', formData)
 
   // ! RENDER -----------------------------------------------------------------
   // * RETURN -----------------------------------------------------------------

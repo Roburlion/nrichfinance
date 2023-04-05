@@ -10,6 +10,7 @@ import AccountAddress from '../components/Account/Address/AccountAddress';
 import AadhaarCards from '../components/Account/AadhaarCards/AadhaarCards';
 import PanCards from '../components/Account/PanCards/PanCards';
 import Phones from '../components/Account/Phones/Phones';
+import Passports from '../components/Account/Passports/Passports';
 
 // * COMPONENT ----------------------------------------------------------------
 export default function Account() {
@@ -25,8 +26,9 @@ export default function Account() {
       <AccountName />
       <Phones />
       <AccountAddress />
-      <AadhaarCards />
+      <Passports />
       <PanCards />
+      <AadhaarCards />
     </div>
   )
 }

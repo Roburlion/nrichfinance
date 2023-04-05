@@ -1,5 +1,5 @@
 import { useUser } from "@supabase/auth-helpers-react"
-import PanCards from "../components/Account/PanCards/PanCards"
+import Passports from "../components/Account/Passports/Passports"
 
 export default function Testing() {
   const user = useUser()
@@ -10,7 +10,7 @@ export default function Testing() {
       <p>{user?.email}</p>
       <hr/>
         <h2>Pan</h2>
-        <PanCards/>
+        <Passports/>
       <hr/>
       <p>
         Welcome to the fun!
