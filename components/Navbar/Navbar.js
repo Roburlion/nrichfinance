@@ -2,8 +2,8 @@ import { useUser, useSupabaseClient } from '@supabase/auth-helpers-react'
 import { useRouter } from "next/router";
 import Link from "next/link";
 import styles from "./Navbar.module.css";
-import FadeIn from '../FadeIn/App'
-import FadeOut from '../FadeOut/App'
+import FadeIn from './FadeIn/App'
+import FadeOut from './FadeOut/App'
 
 const Navbar = ({ session }) => {
   const supabaseClient = useSupabaseClient()

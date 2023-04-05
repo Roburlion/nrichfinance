@@ -22,6 +22,10 @@ describe('getAadhaarCards', () => {
 
   it('should return ONE\'s phone number', async () => {
     const { data } = await getAadhaarCards(ONE)
+<<<<<<< HEAD
+=======
+    console.log('DEBUGGER\n', data)
+>>>>>>> ee83c13c1332a1958c113fb2bc601bc8dfbba59e
     expect(data?.[0]?.aadhaar_card_number).toBe('100000000001')
   })
 
