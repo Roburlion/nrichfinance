@@ -8,7 +8,6 @@
 import AccountName from '../components/Account/Name/AccountName';
 import AccountAddress from '../components/Account/Address/AccountAddress';
 import AadhaarCards from '../components/Account/AadhaarCards/AadhaarCards';
-
 import Phones from '../components/Account/Phones/Phones';
 
 // * COMPONENT ----------------------------------------------------------------
@@ -19,13 +18,11 @@ export default function Account() {
     <div style={{
       width: '100%',
       height: 'auto',
-      // minHeight: 'content',
       padding: '1rem 10%',
     }}>
       <h1>Welcome to your Account page</h1>
       <AccountName />
       <Phones />
-      {/* <AccountPhone /> */}
       <AccountAddress />
       <AadhaarCards />
     </div>
