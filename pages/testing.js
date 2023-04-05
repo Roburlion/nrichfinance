@@ -1,8 +1,7 @@
-import { useUser, useSupabaseClient } from "@supabase/auth-helpers-react"
-import Phones from "../components/Account/Phones/Phones"
+import { useUser } from "@supabase/auth-helpers-react"
+import AadhaarCards from "../components/Account/AadhaarCards/AadhaarCards"
 
 export default function Testing() {
-  const supabase = useSupabaseClient()
   const user = useUser()
 
   return (
@@ -10,8 +9,8 @@ export default function Testing() {
       <h1>Testing</h1>
       <p>{user?.email}</p>
       <hr/>
-        <h2>Phones</h2>
-        <Phones/>
+        <h2>Aadhaar</h2>
+        <AadhaarCards/>
       <hr/>
       <p>
         Welcome to the fun!

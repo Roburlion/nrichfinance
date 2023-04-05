@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import styles from './Styles.module.css';
-import navLogo from '../../public/apple-touch-icon.png';
+import navLogo from '../../../public/apple-touch-icon.png';
 
 import { useRouter } from 'next/router'
 

@@ -36,18 +36,18 @@ export async function getAadhaarCards(userId = null) {
   return { data, error }
 }
 
-export function useAddAadhaarCard(user) {
-  const [isAddingAadhaarCard, setIsAddingAadhaarCard] = useState(false);
+export function useAddAadhaarCards(user) {
+  const [isAddingAadhaarCards, setIsAddingAadhaarCards] = useState(false);
   const supabase = useSupabaseClient();
 
-  async function addAadhaarCard(event) {
+  async function addAadhaarCards(event) {
     event.preventDefault();
-    setIsAddingAadhaarCard(true);
+    setIsAddingAadhaarCards(true);
     const aadhaarCardNumber = event.target[0].value;
 
     try {
       const { error } = await supabase
-        .from("tbl_phone_numbers")
+        .from("tbl_aadhaar_cards")
         .insert({ 
           user_id: user.id, 
           aadhaar_card_number: aadhaarCardNumber 
@@ -56,11 +56,11 @@ export function useAddAadhaarCard(user) {
     } catch (error) {
       console.log('POST error\n\t', error.message);
     } finally {
-      setIsAddingPhone(false);
+      setIsAddingAadhaarCards(false);
     }
   }
 
-  return { addAadhaarCard, isAddingAadhaarCard };
+  return { addAadhaarCards, isAddingAadhaarCards };
 }
 
 /*
