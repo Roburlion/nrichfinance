@@ -20,16 +20,12 @@ describe('getAadhaarCards', () => {
     expect(data?.length).toBe(0)
   })
 
-  it('should return ONE\'s phone number', async () => {
+  it('should return ONE\'s Aadhaar number', async () => {
     const { data } = await getAadhaarCards(ONE)
-<<<<<<< HEAD
-=======
-    console.log('DEBUGGER\n', data)
->>>>>>> ee83c13c1332a1958c113fb2bc601bc8dfbba59e
     expect(data?.[0]?.aadhaar_card_number).toBe('100000000001')
   })
 
-  it('should return MANY\'s phone numbers', async () => {
+  it('should return MANY\'s Aadhaar numbers', async () => {
     const { data } = await getAadhaarCards(MANY)
     expect(data?.length).toBe(3)
     expect(data?.[0]?.aadhaar_card_number).toBe('200000000003')
