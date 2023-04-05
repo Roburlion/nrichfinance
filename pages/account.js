@@ -5,7 +5,8 @@
 // ! --------------------------------------------------------------------------
 
 // * IMPORTS ------------------------------------------------------------------
-import AccountName from '../components/Account/Name/AccountName';
+// import AccountName from '../components/Account/Name/AccountName';
+import Customers from '../components/Account/Customers/Customers';
 import AccountAddress from '../components/Account/Address/AccountAddress';
 import AadhaarCards from '../components/Account/AadhaarCards/AadhaarCards';
 import PanCards from '../components/Account/PanCards/PanCards';
@@ -23,7 +24,7 @@ export default function Account() {
       padding: '1rem 10%',
     }}>
       <h1>Welcome to your Account page</h1>
-      <AccountName />
+      <Customers />
       <Phones />
       <AccountAddress />
       <Passports />
