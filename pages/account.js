@@ -5,10 +5,9 @@
 // ! --------------------------------------------------------------------------
 
 // * IMPORTS ------------------------------------------------------------------
-import { useState } from 'react';
 import AccountName from '../components/Account/Name/AccountName';
-import AccountPhone from '../components/Account/Phone/AccountPhone';
 import AccountAddress from '../components/Account/Address/AccountAddress';
+import AadhaarCards from '../components/Account/AadhaarCards/AadhaarCards';
 
 import Phones from '../components/Account/Phones/Phones';
 
@@ -28,6 +27,7 @@ export default function Account() {
       <Phones />
       {/* <AccountPhone /> */}
       <AccountAddress />
+      <AadhaarCards />
     </div>
   )
 }

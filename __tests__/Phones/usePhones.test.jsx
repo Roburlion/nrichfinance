@@ -1,7 +1,7 @@
 // ! This test makes live API calls to the server. It's slow and flaky. Use it as a last resort.
 
 import '@testing-library/jest-dom'
-import { getPhones } from '../../hooks/Phones/useGetPhones'
+import { getPhones } from '../../hooks/Phones/usePhones'
 
 const NONE = 'ba65dc5d-5278-4e6e-915b-ad555f5d0f2a'
 const ONE = '808eec08-136d-45de-86dc-bb28310a8119'
